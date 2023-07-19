@@ -71,8 +71,10 @@
                         <h3 class="text-sm text-gray-800 mb-3 uppercase font-medium">{{ key }}</h3>
                         <div class="flex items-center gap-2">
                             <div class="size-selector group" v-for="col in item" :key="col">
-                                <input type="radio" @click="checkboxCek($event, key, col.product_id)" :name="key"
-                                    :id="key + '-' + col.value" class="hidden label-checked:bg-secondary label-checked:text-primary" :value="col.value">
+                                <input v-if="key =='Warna'" type="radio" @click="checkboxCek($event, key, col.product_id)" :name="key"
+                                    :id="key + '-' + col.value" class="hidden label-checked:bg-secondary label-checked:text-primary" :value="col.value" />
+                                <input v-else type="radio"  :name="key"
+                                    :id="key + '-' + col.value" class="hidden label-checked:bg-secondary label-checked:text-primary" :value="col.value" />
                                 <label :for="key + '-' + col.value"
                                     class="text-xs border border-gray-200  label-checked:bg-secondary label-checked:text-primary rounded-sm h-full w-full flex items-center justify-center cursor-pointer shadow-sm text-gray-600 px-2 py-1.5 ">{{
                                         col.value }}</label>
@@ -151,10 +153,10 @@
         <!-- /End Comment -->
 
         <!-- related product -->
-        <div class="container mx-auto z-10">
+        <!-- <div class="container mx-auto z-10">
             <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">Rekomendasi Produk</h2>
             <ProductView :product="relateProduct" :listOrBarItemShop="'BAR'" :grid="'grid-cols-2 md:grid-cols-4'" />
-        </div>
+        </div> -->
         <!-- ./related product -->
 
     </div>

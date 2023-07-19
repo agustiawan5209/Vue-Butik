@@ -476,7 +476,6 @@ export default {
             this.WaProduct = item;
         },
         addToWa(item) {
-            console.log(this.resultItem)
             const enter = '%3A%0A';
             const spasi = '%20';
             // const koma = '%3A';
@@ -495,7 +494,6 @@ export default {
             window.location.href = wa;
         },
         addToDetail(item){
-            console.log(item)
             // window.location.reload()
             this.$router.push({ name: 'detailproduct', params: { name: item.name, id: item.id } })
         },
