@@ -163,8 +163,8 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import ProductView from '@/components/ProductView.vue';
-import CommentView from '@/components/CommentView.vue';
+import ProductView from '../components/ProductView.vue';
+import CommentView from '../components/CommentView.vue';
 export default {
     components: {
         ProductView,
