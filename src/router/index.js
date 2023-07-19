@@ -61,6 +61,22 @@ const routes = [
             title: "Detail Product"
         }
     },
+    {
+        path: "/checkout",
+        name: "checkout",
+        component: () => import("../pages/CheckoutView.vue"),
+        meta: {
+          title: "CheckOut"
+        }
+      },
+    {
+        path: "/success",
+        name: "success",
+        component: () => import("../pages/SuccessView.vue"),
+        meta: {
+            title: "Success Checkout"
+        }
+    },
 ]
 
 const router = createRouter({

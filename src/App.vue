@@ -14,10 +14,15 @@
             <span>+62 8154651154</span>
           </div>
         </div>
-        <router-link :to="{ name: 'login' }"
+        <router-link :to="{ name: 'login' }" v-if="loggedIn == false"
           class="auth flex flex-wrap gap-2 items-center text-xs sm:text-sm pr-4 sm:pr-0 cursor-pointer">
           <font-awesome-icon :icon="['fas', 'user']" />
           <span>Login</span>
+        </router-link>
+        <router-link :to="{ name: 'login' }" v-else
+          class="auth flex flex-wrap gap-2 items-center text-xs sm:text-sm pr-4 sm:pr-0 cursor-pointer">
+          <font-awesome-icon :icon="['fas', 'user']" />
+          <span>{{ User.name }}</span>
         </router-link>
       </div>
     </header>

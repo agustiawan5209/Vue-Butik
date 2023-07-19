@@ -23,8 +23,8 @@
                         <div class="w-auto md:w-28">
                             <img :src="item.product.galleriesdefault.photo" alt="product 6" class="w-full">
                         </div>
-                        <div class="w-1/3">
-                            <h2 class="text-gray-800 text-sm md:text-xl font-medium uppercase">{{ item.product.name }}</h2>
+                        <div class="w-1/2">
+                            <h2 class="text-gray-800 text-sm font-medium uppercase">{{ item.product.name }}</h2>
                             <p class="text-gray-500 text-sm">Stok: <span class="text-green-600">{{
                                 item.product.stock }}</span></p>
                         </div>
@@ -174,7 +174,6 @@ export default {
                 })
                     .then(response => {
                         this.Cart = response.data.data.query;
-                        console.log(this.Cart)
                         for (let i = 0; i < this.Cart.length; i++) {
                             this.quantityItem[i] = { quantity: Number(this.Cart[i].quantity), price: Number(this.Cart[i].price) };
                         }
@@ -211,8 +210,7 @@ export default {
             }).catch(err => console.log(err))
         },
         async checkout() {
-            if (this.loggedIn) {
-                const CartData = JSON.stringify(this.Cart);
+            const CartData = JSON.stringify(this.Cart);
                 const encrypted = CryptoJS.AES.encrypt(CartData, '12');
                 const QuantityItem = JSON.stringify(this.quantityItem);
                 const encryptedQuantityItem = CryptoJS.AES.encrypt(QuantityItem, '12');
@@ -221,9 +219,6 @@ export default {
                 localStorage.setItem('quantityItem', encryptedQuantityItem);
 
                 this.$router.push({ name: 'checkout' })
-            } else {
-                Swal.fire('User Not Found');
-            }
         },
         // Update Quantity Chart
         updateMinQuantity(index, price) {

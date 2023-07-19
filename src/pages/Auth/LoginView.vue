@@ -99,7 +99,6 @@ export default {
                     this.loggedIn = true
 
                     //redirect dashboard
-                    window.location.reload();
                     return this.$router.push({ name: 'home' })
 
                 } else {
@@ -110,8 +109,7 @@ export default {
 
             }).catch(error => {
                 const response = error.response.data;
-                this.validation.email = response.data.email.toString();
-                this.validation.password = response.data.password.toString();
+                console.log(response.meta.message)
 
             })
 

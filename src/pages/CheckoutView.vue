@@ -53,7 +53,8 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF
                                         (MAX. 800x400px)</p>
                                 </div>
-                                <input id="dropzone-file" @change="fileSelected($event)" type="file" class="hidden" />
+                                <input id="dropzone-file" @change="fileSelected($event)" type="file" class="hidden"
+                                    required />
                             </label>
                             <div v-else class=" p-2 border border-primary">
                                 <img :src="URLFile" alt="Image" class="w-full h-full object-cover">
@@ -64,7 +65,7 @@
                                 <label for="nama"
                                     class="block mb-2 text-sm font-medium text-gray-900 capitalize">Nama</label>
                                 <input type="text" v-model="name"
-                                    class="focus:ring-primary focus:border-primary rounded-lg block text-sm "
+                                    class="focus:ring-primary focus:border-primary rounded-lg block text-sm border px-2 py-1"
                                     placeholder="Masukkan Nama">
                             </div>
                         </div>
@@ -73,7 +74,7 @@
                                 <label for="email"
                                     class="block mb-2 text-sm font-medium text-gray-900 capitalize">Email</label>
                                 <input type="email" v-model="email"
-                                    class="focus:ring-primary focus:border-primary rounded-lg block text-sm "
+                                    class="focus:ring-primary focus:border-primary rounded-lg block text-sm border px-2 py-1"
                                     placeholder="@gmail.com">
                             </div>
                         </div>
@@ -82,7 +83,7 @@
                                 <label for="No.HP"
                                     class="block mb-2 text-sm font-medium text-gray-900 capitalize">No.HP</label>
                                 <input type="tel" v-model="phoneNumber"
-                                    class="focus:ring-primary focus:border-primary rounded-lg block text-sm "
+                                    class="focus:ring-primary focus:border-primary rounded-lg block text-sm border px-2 py-1"
                                     placeholder="+62">
                             </div>
                         </div>
@@ -91,7 +92,7 @@
                                 <label for="Alamat"
                                     class="block mb-2 text-sm font-medium text-gray-900 capitalize">Alamat</label>
                                 <input type="text" v-model="address"
-                                    class="focus:ring-primary focus:border-primary rounded-lg block text-sm "
+                                    class="focus:ring-primary focus:border-primary rounded-lg block text-sm border px-2 py-1"
                                     placeholder="@.......">
                             </div>
                         </div>
@@ -134,7 +135,7 @@ export default {
         const parseJSONQuantityItem = JSON.parse(decryptedQuantityItem.toString(CryptoJS.enc.Utf8));
         this.Cart = parseJSON;
         this.quantityItem = parseJSONQuantityItem;
-        // console.log(parseJSONQuantityItem)
+        console.log(parseJSONQuantityItem)
         for (let i = 0; i < this.Cart.length; i++) {
             const element = this.Cart[i];
             element.price = this.quantityItem[i].price
@@ -154,36 +155,36 @@ export default {
             this.URLFile = URL.createObjectURL(e.target.files[0])
             console.log(this.file)
         },
-         submit() {
-            if (this.loggedIn) {
-                let idProduk = this.Cart.map((item) => {
-                    return item.product_id
+        submit() {
+            let idProduk = this.Cart.map((item) => {
+                return item.product_id
+            })
+            console.log(this.Cart)
+            axios.get('http://127.0.0.1:8000/api/user', {
+                headers: { Authorization: 'Bearer ' + this.access_token }
+            }).then((res) => {
+                axios.post('http://127.0.0.1:8000/api/checkout', {
+                    user_id: res.data.id,
+                    name: this.name,
+                    email: this.email,
+                    number: this.phoneNumber,
+                    address: this.address,
+                    transaction_total: this.subtotal,
+                    transaction_status: "PENDING",
+                    transaction_details: idProduk,
+                    transaction_product: this.Cart,
                 })
-                axios.get('http://127.0.0.1:8000/api/user', {
-                    headers: { Authorization: 'Bearer ' + this.access_token }
-                })
-                    .then((res) => {
-                        axios.post('http://127.0.0.1:8000/api/checkout', {
-                            user_id: res.data.id,
-                            name: this.name,
-                            email: this.email,
-                            number: this.phoneNumber,
-                            address: this.address,
-                            transaction_total: this.subtotal,
-                            transaction_status: "PENDING",
-                            transaction_details: idProduk,
-                            transaction_product: this.Cart,
-                        })
-                            .then(() => {
-                                this.$router.push({ name: 'success' }).then(() => { this.$router.go() });
-                                localStorage.removeItem('cart')
-                                localStorage.removeItem('subtotal')
-                                localStorage.removeItem('quantityItem')
-                            })
-                            .catch(error => console.log(error.response.data))
-                    }).catch(error => console.log(error))
+                    .then(() => {
+                        this.$router.push({ name: 'success' })
 
-            }
+                        localStorage.removeItem('cart')
+                        localStorage.removeItem('subtotal')
+                        localStorage.removeItem('quantityItem')
+                    })
+                    .catch(error => console.log(error.response.data))
+            }).catch(error => console.log(error))
+
+
         }
     }
 }
