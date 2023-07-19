@@ -1,95 +1,442 @@
 <template>
-    <section class="w-full mx-auto mt-2">
-        <div class="w-full mx-auto flex flex-col md:flex-row justify-between gap-4">
-            <div class="relative w-2/3 md:w-1/5 ">
-                <div class="absolute w-full h-max bg-primary px-3 py-5">
-                    <!-- Kategori -->
-                    <div class="w-full py-2">
-                        <ul class="list-item space-y-2">
-                            <li v-for="list in kategori" class="flex flex-1 inset-0 gap-2 pl-4">
-                                <input type="checkbox" :name="list.nama" :id="list.nama">
-                                <label :for="list.nama" v-text="list.nama"
-                                    class="text-right font-medium capitalize text-white drop-shadow-sm"></label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- ./Kategori -->
+    <div class="container mx-auto">
 
-                    <!-- Price -->
-                    <div class="w-full flex flex-row justify-center py-2">
-                        <div class=" w-32 sm:w-20 md:w-32">
-                            <label for="price-high" class="sr-only">price-high</label>
-                            <input type="number" name="price-high" id="price-high" class="w-full rounded-md text-center p-1"
-                                value="0">
-                        </div>
-                        <span>-</span>
-                        <div class=" w-32 sm:w-20 md:w-32">
-                            <label for="price-high" class="sr-only">price-high</label>
-                            <input type="number" name="price-high" id="price-high" class="w-full rounded-md text-center p-1"
-                                value="0">
-                        </div>
-                    </div>
-                    <!-- ./Price -->
-                </div>
+
+        <!-- shop wrapper -->
+        <div class="container grid md:grid-cols-4 grid-cols-2 gap-6 pt-4 pb-16 items-start">
+            <!-- sidebar -->
+            <!-- drawer init and toggle -->
+            <div class="text-center  md:hidden">
+                <button @click="drawer($event)"
+                    class="text-white bg-primary hover:bg-primary focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none block md:hidden"
+                    type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
+                    aria-controls="drawer-example">
+                    <i class="fa-solid fa-bars text-white"></i>
+                </button>
             </div>
-            <div class="w-4/5 container mx-auto">
-                <div class="flex flex-wrap gap-2 ">
-                    <div class="w-64 h-max pb-4 bg-transparent overflow-hidden shadow-lg rounded-md border border-gray-200"
-                        v-for="item in 10">
-                        <!-- Header Card -->
-                        <div class="relative w-full group overflow-hidden">
-                            <div class="absolute w-full h-full hidden group-hover:flex flex-row gap-2 justify-center items-center z-50 transition-all">
-                                <a href="#" class="">
-                                    <font-awesome-icon class="rounded-full bg-primary text-white p-1" :icon="['fas', 'eye']" />
-                                </a>
-                                <a href="#" class="">
-                                    <font-awesome-icon class="rounded-full bg-primary text-white p-1" :icon="['fas', 'heart']" />
-                                </a>
+
+            <!-- drawer component -->
+            <div id="drawer-example"
+                class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-primary w-80 "
+                tabindex="-1" aria-labelledby="drawer-label">
+                <h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-800 "><svg
+                        class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>Info</h5>
+                <button type="button" @click="closeDrawer" data-drawer-hide="drawer-example" aria-controls="drawer-example"
+                    class="text-gray-800 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center ">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close menu</span>
+                </button>
+                <div class="divide-y divide-gray-200 space-y-5">
+                    <div>
+                        <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Kategori</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center" v-for="item in categories" :key="item.id">
+                                <input type="checkbox" :value="item.name" v-bind:name="item.name" v-bind:id="item.name"
+                                    v-model="categoryName" class="text-primary focus:ring-0 rounded-sm cursor-pointer"
+                                    @change="changeCheckboxCategory()">
+                                <label :for="item.name" class="text-gray-700 ml-3 cusror-pointer">{{ item.name }}</label>
+                                <div class="ml-auto text-gray-600 text-sm">({{ item.product.length }})</div>
                             </div>
-                            <div class="absolute w-full h-full opacity-30 group-hover:opacity-10 bg-gray-600 transition-opacity"></div>
-                            <img class=" rounded-t-lg group-hover:scale-125 transition-transform"
-                                :src="'img/product/product-1.jpg'" alt="product image" />
                         </div>
-                        <!-- content -->
-                        <div class="w-full px-3">
-                            <h1 class="font-medium text-sm sm:text-lg md:text-xl">Nama Produk {{ item }} </h1>
-                            <dl class="text-left font-normal text-xs sm:text-sm text-gray-500">
-                                <dt class="text">Deskripsi Singkat</dt>
-                                <dd>stok</dd>
-                            </dl>
+                    </div>
+
+                    <div class="pt-4">
+                        <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Harga</h3>
+                        <div class="mt-4 flex items-center">
+                            <input type="text" name="min" id="min" v-model="priceMaxMin.min"
+                                class="w-full border-gray-300 focus:border-primary rounded focus:ring-0 px-3 py-1 text-gray-600 shadow-sm"
+                                placeholder="min">
+                            <span class="mx-3 text-gray-500">-</span>
+                            <input type="text" name="max" id="max" v-model="priceMaxMin.max"
+                                class="w-full border-gray-300 focus:border-primary rounded focus:ring-0 px-3 py-1 text-gray-600 shadow-sm"
+                                placeholder="max">
                         </div>
-                        <!-- Footer -->
-                        <div class="flex flex-row items-center gap-1 px-4 ">
-                            <h2 class="text-lg text-error">Rp. 100.000</h2>
-                            <span class="text-sm text-error underline">5%</span>
+                    </div>
+
+                    <!-- <div class="pt-4">
+                        <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">size</h3>
+                        <div class="flex items-center gap-2">
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-xs" class="hidden">
+                                <label for="size-xs"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XS</label>
+                            </div>
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-sm" class="hidden">
+                                <label for="size-sm"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
+                            </div>
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-m" class="hidden">
+                                <label for="size-m"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
+                            </div>
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-l" class="hidden">
+                                <label for="size-l"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
+                            </div>
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-xl" class="hidden">
+                                <label for="size-xl"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
+                            </div>
                         </div>
-                        <div class="flex justify-center items-center mt-2 px-2">
-                            <button type="button"
-                                class="w-1/2 bg-primary text-white font-medium rounded-md py-1 hover:bg-secondary active:bg-success transition-all ease-linear">Beli</button>
-                            <button type="button"
-                                class="w-1/2 bg-primary text-white font-medium rounded-md py-1 hover:bg-secondary active:bg-success transition-all ease-linear">Keranjang</button>
+                    </div>
+
+                    <div class="pt-4">
+                        <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Color</h3>
+                        <div class="flex items-center gap-2">
+                            <div class="color-selector">
+                                <input type="radio" name="color" id="red" class="hidden">
+                                <label for="red"
+                                    class="border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block"
+                                    style="background-color: #fc3d57;"></label>
+                            </div>
+                            <div class="color-selector">
+                                <input type="radio" name="color" id="black" class="hidden">
+                                <label for="black"
+                                    class="border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block"
+                                    style="background-color: #000;"></label>
+                            </div>
+                            <div class="color-selector">
+                                <input type="radio" name="color" id="white" class="hidden">
+                                <label for="white"
+                                    class="border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block"
+                                    style="background-color: #fff;"></label>
+                            </div>
+
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+
+            <!-- ./sidebar -->
+            <div class="col-span-1 bg-primary px-4 pb-6 shadow rounded overflow-hidden hidden md:block">
+                <div class="divide-y divide-gray-200 space-y-5 ">
+                    <div>
+                        <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Kategori</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center" v-for="item in categories" :key="item.id">
+                                <input type="checkbox" :value="item.name" v-bind:name="item.name" v-bind:id="item.name"
+                                    v-model="categoryName" class="text-primary focus:ring-0 rounded-sm cursor-pointer"
+                                    @change="changeCheckboxCategory()">
+                                <label :for="item.name" class="text-gray-600 ml-3 cusror-pointer">{{ item.name }}</label>
+                                <div class="ml-auto text-gray-600 text-sm">({{ item.product.length }})</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Price</h3>
+                        <div class="mt-4 flex items-center">
+                            <input type="text" name="min" id="min" v-model="priceMaxMin.min"
+                                class="w-full border-gray-300 focus:border-primary rounded focus:ring-0 px-3 py-1 text-gray-600 shadow-sm"
+                                placeholder="min">
+                            <span class="mx-3 text-gray-500">-</span>
+                            <input type="text" name="max" id="max" v-model="priceMaxMin.max"
+                                class="w-full border-gray-300 focus:border-primary rounded focus:ring-0 px-3 py-1 text-gray-600 shadow-sm"
+                                placeholder="max">
+                        </div>
+                    </div>
+                    <!-- Size -->
+                    <!-- <div class="pt-4">
+                        <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">size</h3>
+                        <div class="flex items-center gap-2">
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-xs" class="hidden">
+                                <label for="size-xs"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XS</label>
+                            </div>
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-sm" class="hidden">
+                                <label for="size-sm"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">S</label>
+                            </div>
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-m" class="hidden">
+                                <label for="size-m"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">M</label>
+                            </div>
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-l" class="hidden">
+                                <label for="size-l"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">L</label>
+                            </div>
+                            <div class="size-selector">
+                                <input type="radio" name="size" id="size-xl" class="hidden">
+                                <label for="size-xl"
+                                    class="text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600">XL</label>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Color -->
+                    <!-- <div class="pt-4">
+                        <h3 class="text-xl text-gray-800 mb-3 uppercase font-medium">Color</h3>
+                        <div class="flex items-center gap-2">
+                            <div class="color-selector">
+                                <input type="radio" name="color" id="red" class="hidden">
+                                <label for="red"
+                                    class="border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block"
+                                    style="background-color: #fc3d57;"></label>
+                            </div>
+                            <div class="color-selector">
+                                <input type="radio" name="color" id="black" class="hidden">
+                                <label for="black"
+                                    class="border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block"
+                                    style="background-color: #000;"></label>
+                            </div>
+                            <div class="color-selector">
+                                <input type="radio" name="color" id="white" class="hidden">
+                                <label for="white"
+                                    class="border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block"
+                                    style="background-color: #fff;"></label>
+                            </div>
+
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+            <!-- products -->
+            <div class="col-span-3">
+                <!-- View Product -->
+                <div class="flex items-center mb-4">
+                    <select name="sort" id="sort" @change="sorting($event)"
+                        class="w-44 text-sm text-gray-600 py-3 px-4 border-gray-300 shadow-sm rounded focus:ring-primary focus:border-primary">
+                        <option value="">Default</option>
+                        <option value="price_low_to_high">Harga Murah ke Tinggi</option>
+                        <option value="price_high_to_low">Harga Tinggi ke Murah</option>
+                        <option value="latest">Terbaru</option>
+                    </select>
+
+                    <div class="flex gap-2 ml-auto">
+                        <div @click="listOrBarItemShopFunc('BAR')"
+                            :class="listOrBarItemShop == 'BAR' ? 'border-primary text-white bg-primary' : 'border-gray-300 text-gray-600 bg-transparent'"
+                            class="border  w-10 h-9 flex items-center justify-center  rounded cursor-pointer transition ease-in">
+                            <font-awesome-icon :icon="['fas', 'bars']" />
+                        </div>
+                        <div @click="listOrBarItemShopFunc('LIST')"
+                            :class="listOrBarItemShop == 'LIST' ? 'border-primary text-white bg-primary' : 'border-gray-300 text-gray-600 bg-transparent'"
+                            class="border w-10 h-9 flex items-center justify-center  rounded cursor-pointer transition ease-in">
+                            <font-awesome-icon :icon="['fas', 'list']" />
                         </div>
                     </div>
                 </div>
+
+                <ProductView :product="product.data" :listOrBarItemShop="listOrBarItemShop"
+                    :grid="'grid-cols-2 md:grid-cols-3'" />
+
+                <div v-if="product">
+                    <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+                        aria-label="Table navigation">
+                        <span class="text-sm font-normal text-gray-500">
+                            Showing
+                            <span class="font-semibold text-gray-900">{{ product.from }}</span>
+                            of
+                            <span class="font-semibold text-gray-900">{{ product.total }}</span>
+                        </span>
+                        <ul class="inline-flex items-stretch -space-x-px rounded-lg gap-1">
+
+                            <li v-for="(link, idx) in product.links" :key="link">
+
+                                <a href="#" v-if="link.url === null" :key="idx"
+                                    class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                                    v-html="link.label" />
+                                <a href="#" v-else :key="`link-${idx}`"
+                                    :class="link.active ? 'bg-white border-info text-black' : 'border-gray-300'"
+                                    @click="GetPage(link.url)"
+                                    class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border  hover:bg-gray-100 hover:text-gray-700"
+                                    v-html="link.label" />
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
             </div>
+
+            <!-- ./products -->
         </div>
-    </section>
+        <!-- ./shop wrapper -->
+
+    </div>
 </template>
 
 <script>
+import axios from 'axios';
+import querystring from 'qs'
+import { useRoute } from 'vue-router';
+// import Swal from 'sweetalert2';
+import ProductView from '../components/ProductView.vue';
+
 export default {
+    components: {
+        ProductView,
+    },
     data() {
         return {
-            kategori: [
-                { nama: 'Fashion pria' },
-                { nama: 'Fashion Wanita' },
-                { nama: 'Fashion Bayi' },
-                { nama: 'Kaos' },
-                { nama: 'Fashion Muslim' },
-                { nama: 'Hijab' },
-            ],
-            listKategori: [],
+            slug: this.$route.params.slug,
+            product: [],
+            params: null,
+            categories: null,
+            categoryName: [],
+            sortingPrice: null,
+            priceMaxMin: {
+                max: 0,
+                min: 0,
+            },
+            User: [],
+            access_token: localStorage.getItem('token'),
+            loggedIn: localStorage.getItem('loggedIn'),
+            listOrBarItemShop: localStorage.getItem('listOrBarItemShop')
+        }
+    },
+    watch: {
+        priceMaxMin: {
+            handler: function (value) {
+                console.log(value.min);
+                if (value.min > 0 || value.max > 0) {
+                    this.init()
+                }
+            },
+            deep: true,
+        }
+    },
+    beforeCreate() {
+        // Mengirim Kondisi apabila slug kosong
+        axios.get('http://127.0.0.1:8000/api/categories')
+            .then((res) => {
+                this.categories = res.data.data.data;
+            })
+            .catch(error => console.log(error))
+        if (this.listOrBarItemShop == null) {
+            localStorage.setItem('listOrBarItemShop', 'BAR')
+        }
+    },
+    created() {
+        const route = useRoute();
+        this.params = route.params;
+
+        if (this.loggedIn == true) {
+            // User
+            axios.get('http://127.0.0.1:8000/api/user', {
+                headers: { Authorization: 'Bearer ' + this.access_token }
+            })
+                .then(res => {
+                    this.User = res.data;
+                }).catch(error => console.log(error))
+
+        }
+        // Bar List Item
+        if (this.listOrBarItemShop == null) {
+            localStorage.setItem('listOrBarItemShop', 'BAR');
+        }
+    },
+
+    mounted() {
+        this.init('http://127.0.0.1:8000/api/products')
+        // View Product
+
+    },
+    methods: {
+        // rupiah(number) {
+        //     return new Intl.NumberFormat("id-ID", {
+        //         style: "currency",
+        //         currency: "IDR"
+        //     }).format(number);
+        // },
+
+        GetPage(url) {
+            this.init(url)
+
+        },
+        drawer() {
+            var drawer = document.getElementById('drawer-example');
+            drawer.classList.replace('-translate-x-full', 'translate-x-0');
+        },
+        closeDrawer() {
+            var drawer = document.querySelector('[data-drawer-hide="drawer-example"]');
+            var target = document.getElementById(drawer.getAttribute('data-drawer-hide'));
+            target.classList.replace('translate-x-0', '-translate-x-full')
+        },
+        init(url = null) {
+            const pageUrl = url == null ? 'http://127.0.0.1:8000/api/products' : url;
+            // console.log(this.categoryName)
+            if (this.categoryName.length > 0) {
+                axios.get(pageUrl, {
+                    params: {
+                        price_max: this.priceMaxMin.max,
+                        price_min: this.priceMaxMin.min,
+                        categories_array: this.categoryName,
+                        limit: 12,
+                        order_by_value: this.sortingPrice,
+                    },
+                    paramsSerializer: function (params) {
+                        return querystring.stringify(params);
+                    }
+                })
+                    .then((res) => {
+                        this.product = res.data.data;
+                    })
+                    .catch(error => console.log(error))
+            } else {
+                axios.get(pageUrl, {
+                    params: {
+                        price_max: this.priceMaxMin.max,
+                        price_min: this.priceMaxMin.min,
+
+                        limit: 12,
+                        order_by_value: this.sortingPrice,
+                    },
+                    paramsSerializer: function (params) {
+                        return querystring.stringify(params);
+                    }
+                })
+                    .then((res) => {
+                        this.product = res.data.data;
+                    })
+                    .catch(error => console.log(error))
+            }
+        },
+        // Change Category Checkbox
+        changeCheckboxCategory() {
+
+            this.init()
+
+        },
+
+        // Change Sorting Select
+        sorting(event) {
+            this.sortingPrice = event.target.value;
+            this.init()
+        },
+        // End Sorting Price
+
+        listOrBarItemShopFunc(list) {
+            localStorage.setItem('listOrBarItemShop', list);
+            this.listOrBarItemShop = list;
+
         }
     }
+
 }
 </script>
+
+
+<style>
+.img-product img {
+    height: 217.77px !important;
+    overflow: hidden;
+}
+</style>

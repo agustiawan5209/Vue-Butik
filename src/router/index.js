@@ -31,9 +31,13 @@ const routes = [
         component: Home,
     },
     {
-        path: '/belanja',
-        name: 'shop',
+        path: "/shop/:slug?",
+        name: "shop",
+        props: false,
         component: Shop,
+        meta: {
+            title: "SHOP",
+        }
     },
     {
         path: '/tentang-kami',
@@ -43,11 +47,21 @@ const routes = [
 
     // Cart
     {
-        path:"/cart",
+        path: "/cart",
         name: 'cart',
         component: CartView,
     },
- ]
+
+    // Route Detail Product
+    {
+        path: "/View/:name/:id",
+        name: "detailproduct",
+        component: () => import("../pages/DetailView.vue"),
+        meta: {
+            title: "Detail Product"
+        }
+    },
+]
 
 const router = createRouter({
     history: createWebHistory(),

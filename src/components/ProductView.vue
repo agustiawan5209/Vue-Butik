@@ -8,19 +8,19 @@
                     <div class="relative" :class="item.stock > 0 ? '' : 'opacity-70 cursor-not-allowed'">
                         <img :src="item.galleriesdefault.photo" v-if="item.galleries.length > 0" :alt="item.name"
                             class="w-full object-cover">
-                        <img :src="'/../img/logofeed.png'" v-else :alt="item.name"
+                        <img :src="'img/katalog/katalog1.jpg'" v-else :alt="item.name"
                             class="w-full object-cover drop-shadow-2xl">
                         <div
                             class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                             <a href="#" @click="addToDetail(item)"
                                 class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                                 title="Detail">
-                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
                             </a>
                             <a href="#" @click="addWishlist(item.id)" v-if="config.wishlist"
                                 class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                                 title="Wishlist">
-                                <i class="fa-solid fa-heart"></i>
+                                <font-awesome-icon :icon="['fas', 'heart']" />
                             </a>
                         </div>
                     </div>
@@ -57,10 +57,12 @@
                     <div class="flex ">
                         <button type="button" @click="ModalCart(item)" v-if="item.stock > 0 && config.cart"
                             class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
-                            <i class="fa-solid fa-cart-plus"></i>Keranjang</button>
+                            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="transition-all" />
+                            Keranjang</button>
                         <a href="#" @click="ModalWA(item)" v-if="config.WA"
                             class="block w-full py-1.5 px-2 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition text-xs md:text-base whitespace-nowrap">
-                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            <font-awesome-icon :icon="['fab', 'whatsapp']" class="transition-all" />
+                            WhatsApp
                         </a>
                     </div>
                 </div>

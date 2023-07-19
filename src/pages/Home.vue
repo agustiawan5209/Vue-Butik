@@ -11,11 +11,11 @@
     <!-- End Katalog -->
 
     <!-- New Product -->
-    <section class="container mx-auto sm:my-10 md:my-20">
+    <section class="container mx-auto sm:my-5 md:my-10">
         <h1 class="text-base sm:text-lg md:text-2xl lg:text-3xl">Produk Terbaru</h1>
         <CarouselNewProduct />
     </section>
-    <section class="container mx-auto sm:my-10 md:my-20">
+    <section class="container mx-auto sm:my-5 md:my-10">
         <h1 class="text-base sm:text-lg md:text-2xl lg:text-3xl">Produk Terlaris</h1>
         <CarouselTerlaris />
     </section>
