@@ -96,7 +96,7 @@ export default defineComponent({
     mounted() {
         axios.get('http://127.0.0.1:8000/api/products', {
             params: {
-                order_by: 'desc',
+                order_by: 'asc',
                 limit: 4,
             }
         }).then((res) => {
