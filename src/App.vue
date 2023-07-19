@@ -14,10 +14,11 @@
             <span>+62 8154651154</span>
           </div>
         </div>
-        <div class="auth flex flex-wrap gap-2 items-center text-xs sm:text-sm pr-4 sm:pr-0">
+        <router-link :to="{ name: 'login' }"
+          class="auth flex flex-wrap gap-2 items-center text-xs sm:text-sm pr-4 sm:pr-0 cursor-pointer">
           <font-awesome-icon :icon="['fas', 'user']" />
           <span>Login</span>
-        </div>
+        </router-link>
       </div>
     </header>
     <!-- End Header -->
@@ -81,34 +82,32 @@
 
       <!-- Navigation Router -->
       <ul class="inline-flex space-x-4 sm:space-x-10 md::space-x-24 border-b-2 pb-1 sm:border-b-0 sm:pb-0">
-        <li class="relative flex flex-row justify-center items-center group gap-2" @click="navbar = 'home'"
-          v-bind:class="navbar == 'home' ? activeClass : nonActiveClass">
+        <router-link :to="{ name: 'home' }" class="relative flex flex-row justify-center items-center group gap-2"
+          :active-class="activeClass">
           <font-awesome-icon :icon="['fas', 'home']" class="transition-all" />
-          <router-link :to="{ name: 'home' }" class="capitalize relative font-semibold">Home</router-link>
-        </li>
-        <li class="relative flex flex-row justify-center items-center group gap-2" @click="navbar = 'shop'"
-          v-bind:class="navbar == 'shop' ? activeClass : nonActiveClass">
+          <span class="capitalize relative font-semibold">Home</span>
+        </router-link>
+        <router-link :to="{ name: 'shop' }" class="relative flex flex-row justify-center items-center group gap-2"
+          :active-class="activeClass">
           <font-awesome-icon :icon="['fas', 'shop']" class="transition-all" />
-          <router-link :to="{ name: 'shop' }" class="capitalize relative font-semibold">Produk</router-link>
-        </li>
-        <li class="relative flex flex-row justify-center items-center group gap-2" @click="navbar = 'about'"
-          v-bind:class="navbar == 'about' ? activeClass : nonActiveClass">
+          <span class="capitalize relative font-semibold">Produk</span>
+        </router-link>
+        <router-link :to="{ name: 'about' }" class="relative flex flex-row justify-center items-center group gap-2"
+          :active-class="activeClass">
           <font-awesome-icon :icon="['fas', 'user']" class="transition-all" />
-          <router-link :to="{ name: 'about' }" class="capitalize relative font-semibold">Tentang Kami</router-link>
-        </li>
+          <span class="capitalize relative font-semibold">Tentang Kami</span>
+        </router-link>
       </ul>
       <!-- End Navigation -->
 
       <!-- Cart And Wishlist -->
-      <div class="relative px-2">
-        <ul class="inline-flex space-x-4 justify-end">
-
-          <li class="relative flex flex-row justify-center items-center group hover:text-primary gap-2">
-            <font-awesome-icon :icon="['fas', 'cart-shopping']"
-              class="text-gray-800 group-hover:text-primary transition-all" />
-            <a href="#cart" class="capitalize relative font-semibold">Cart</a>
-          </li>
-        </ul>
+      <div class="relative px-2 inline-flex space-x-4 justify-end">
+        <router-link :to="{ name: 'cart' }"
+          class="relative flex flex-row justify-center items-center group hover:text-primary gap-2"
+          :active-class="activeClass">
+          <font-awesome-icon :icon="['fas', 'cart-shopping']" class="transition-all" />
+          <a href="#cart" class="capitalize relative font-semibold">Cart</a>
+        </router-link>
       </div>
       <!-- Enda Cart And Wishlist -->
 
@@ -230,6 +229,8 @@ import Katalog from './components/Katalog.vue';
 import CarouselHeader from './components/CarouselHeader.vue';
 import CarouselNewProduct from './components/CarouselNewProduct.vue';
 import CarouselTerlaris from './components/CarouselTerlaris.vue';
+
+import axios from 'axios';
 export default {
   components: {
     Katalog,
@@ -245,7 +246,22 @@ export default {
       navbar: 'home',
       activeClass: 'text-primary transition-all',
       nonActiveClass: 'text-gray-800 hover:text-primary transition-all',
+      User: [],
+      access_token: localStorage.getItem('token'),
+      loggedIn: localStorage.getItem('loggedIn'),
+      CartLength: null,
+      WishlistLenght: null,
+      config: {
+        cart: true,
+        wishlist: true,
+        user: true,
+      },
+      modalSearch: false,
+      loadingPage: false,
     }
+  },
+  mounted() {
+    this.getUser()
   },
   methods: {
     dropdownShow() {
@@ -253,7 +269,24 @@ export default {
     },
     onClose() {
       this.showDropdown = false
-    }
+    },
+    getUser() {
+      axios.get('http://127.0.0.1:8000/api/user', {
+        headers: { Authorization: 'Bearer ' + this.access_token }
+      })
+        .then(res => {
+          this.User = res.data
+          this.CartLength = res.data.cart.length;
+          this.WishlistLenght = res.data.wishlist.length;
+        }).catch(error => {
+          const resError = error.response;
+          if (resError.status === 401 && resError.statusText === "Unauthorized") {
+            localStorage.removeItem('token')
+            localStorage.removeItem('token_type')
+            localStorage.setItem('loggedIn', false);
+          }
+        })
+    },
   }
 }
 </script>
