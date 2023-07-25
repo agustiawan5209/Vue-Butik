@@ -10,7 +10,8 @@ import About from '../pages/About.vue';
 import Login from '../pages/auth/LoginView.vue';
 import Register from '../pages/auth/RegisterView.vue';
 
-import CartView from '../pages/CartView.vue'
+import CartView from '../pages/CartView.vue';
+import HubungiKami from '../pages/Hubungi.vue'
 const routes = [
 
     // Auth
@@ -43,6 +44,11 @@ const routes = [
         path: '/tentang-kami',
         name: 'about',
         component: About,
+    },
+    {
+        path: '/hubungi-kami',
+        name: 'hubungi',
+        component: HubungiKami,
     },
 
     // Cart

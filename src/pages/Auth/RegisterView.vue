@@ -161,8 +161,7 @@ export default {
 
     //check user already logged in
     mounted() {
-
-        if (this.loggedIn) {
+        if (this.loggedIn === 'true') {
             return this.$router.push({ name: 'home' })
         }
 

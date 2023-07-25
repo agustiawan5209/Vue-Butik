@@ -102,6 +102,11 @@
           <font-awesome-icon :icon="['fas', 'user']" class="transition-all" />
           <span class="capitalize relative font-semibold">Tentang Kami</span>
         </router-link>
+        <router-link :to="{ name: 'hubungi' }" class="relative flex flex-row justify-center items-center group gap-2"
+          :active-class="activeClass">
+          <font-awesome-icon :icon="['fas', 'comments']" class="transition-all" />
+          <span class="capitalize relative font-semibold">Hubungi Kami</span>
+        </router-link>
       </ul>
       <!-- End Navigation -->
 
