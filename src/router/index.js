@@ -11,7 +11,27 @@ import Login from '../pages/auth/LoginView.vue';
 import Register from '../pages/auth/RegisterView.vue';
 
 import CartView from '../pages/CartView.vue';
-import HubungiKami from '../pages/Hubungi.vue'
+import HubungiKami from '../pages/Hubungi.vue';
+import AccountInfo from "../pages/account/UserAccount.vue";
+import DashboardAccountView from "../pages/account/DashboardAccountView.vue";
+import WishlistView from "../pages/account/WishlistView.vue";
+import OrderStory from "../pages/account/OrderStoryView.vue";
+// Auth Guard Vue Router
+function GuardRouter() {
+    var isAuthenticated = false;
+    if (localStorage.getItem("loggedIn")) {
+        isAuthenticated = true;
+    } else {
+        isAuthenticated = false;
+    }
+    if (isAuthenticated) {
+        return true;
+    } else {
+        return {
+            name: 'login'
+        }
+    }
+}
 const routes = [
 
     // Auth
@@ -72,15 +92,52 @@ const routes = [
         name: "checkout",
         component: () => import("../pages/CheckoutView.vue"),
         meta: {
-          title: "CheckOut"
+            title: "CheckOut"
         }
-      },
+    },
     {
         path: "/success",
         name: "success",
         component: () => import("../pages/SuccessView.vue"),
         meta: {
             title: "Success Checkout"
+        }
+    },
+
+    // Router For User Account
+    {
+        path: "/account",
+        name: "account",
+        beforeEnter: GuardRouter,
+        component: DashboardAccountView,
+        children: [{
+                path: "",
+                name: "account.info",
+                component: AccountInfo
+            },
+
+            {
+                path: "/wishlist",
+                name: "account.wishlist",
+                beforeEnter: GuardRouter,
+                component: WishlistView,
+                meta: {
+                    title: "Wishlist Product"
+                }
+            },
+            // Order History Transaction
+            {
+                path: "/OrderStory",
+                name: "account.order",
+                beforeEnter: GuardRouter,
+                component: OrderStory,
+                meta: {
+                    title: "Order Story"
+                }
+            }
+        ],
+        meta: {
+            title: "Account"
         }
     },
 ]

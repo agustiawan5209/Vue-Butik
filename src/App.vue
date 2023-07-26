@@ -19,7 +19,7 @@
           <font-awesome-icon :icon="['fas', 'user']" />
           <span>Login</span>
         </router-link>
-        <router-link :to="{ name: 'login' }" v-else
+        <router-link :to="{ name: 'account.info' }" v-else
           class="auth flex flex-wrap gap-2 items-center text-xs sm:text-sm pr-4 sm:pr-0 cursor-pointer">
           <font-awesome-icon :icon="['fas', 'user']" />
           <span>{{ User.name }}</span>
@@ -46,7 +46,7 @@
       </form>
       <div class="relative flex flex-row justify-center items-center group hover:text-primary gap-2">
         <font-awesome-icon :icon="['fas', 'heart']" class="text-gray-800 group-hover:text-primary transition-all" />
-        <a href="#wishlist" class="capitalize relative font-semibold">Wishlist</a>
+        <router-link :to="{name: 'account.wishlist'}" class="capitalize relative font-semibold">Wishlist</router-link>
       </div>
       <!-- End Form Search -->
     </section>
