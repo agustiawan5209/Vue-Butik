@@ -19,7 +19,7 @@ import OrderStory from "../pages/account/OrderStoryView.vue";
 // Auth Guard Vue Router
 function GuardRouter() {
     var isAuthenticated = false;
-    if (localStorage.getItem("loggedIn")) {
+    if (localStorage.getItem("loggedIn") == 'true') {
         isAuthenticated = true;
     } else {
         isAuthenticated = false;

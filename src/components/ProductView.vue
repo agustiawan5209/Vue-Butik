@@ -1,11 +1,11 @@
 <template>
-    <KeepAlive >
+    <KeepAlive>
         <div class="w-full">
             <transition-group :key="listOrBarItemShop" name="slide-fade" tag="div" :class="grid"
                 class="grid grid-cols-1 gap-6" v-if="listOrBarItemShop == 'BAR'">
                 <div class="bg-white  rounded h-full overflow-hidden group img-product transition-all ease-in"
                     v-for="(item, index) in product" :key="item.id" :index="index">
-                    <div class="relative" :class="item.stock > 0 ? '' : 'opacity-70 cursor-not-allowed'">
+                    <div class="relative" :class="item.stock > 0 ? '' : 'opacity-70 cursor-not-allowed bg-red-500'">
                         <img :src="item.galleriesdefault.photo" v-if="item.galleries.length > 0" :alt="item.name"
                             class="w-full object-cover">
                         <img :src="'img/katalog/katalog1.jpg'" v-else :alt="item.name"
@@ -44,15 +44,15 @@
                             </tr>
                         </table>
                         <!-- <div class="flex items-center">
-            <div class="flex gap-1 text-sm text-yellow-400">
-                <span><i class="fa-solid fa-star"></i></span>
-                <span><i class="fa-solid fa-star"></i></span>
-                <span><i class="fa-solid fa-star"></i></span>
-                <span><i class="fa-solid fa-star"></i></span>
-                <span><i class="fa-solid fa-star"></i></span>
-            </div>
-            <div class="text-xs text-gray-500 ml-3">({{ item.stock }})</div>
-        </div> -->
+                        <div class="flex gap-1 text-sm text-yellow-400">
+                            <span><i class="fa-solid fa-star"></i></span>
+                            <span><i class="fa-solid fa-star"></i></span>
+                            <span><i class="fa-solid fa-star"></i></span>
+                            <span><i class="fa-solid fa-star"></i></span>
+                            <span><i class="fa-solid fa-star"></i></span>
+                        </div>
+                        <div class="text-xs text-gray-500 ml-3">({{ item.stock }})</div>
+                    </div> -->
                     </div>
                     <div class="flex ">
                         <button type="button" @click="ModalCart(item)" v-if="item.stock > 0 && config.cart"
@@ -87,16 +87,16 @@
                                 <!-- <p class="text-xs sm:text-sm  text-gray-400 line-through">$55.90</p> -->
                             </div>
 
-                            <!-- <div class="flex flex-col md:flex-row items-center">
-                <div class="flex gap-1 text-xs sm:text-sm text-yellow-400">
-                    <span><i class="fa-solid fa-star"></i></span>
-                    <span><i class="fa-solid fa-star"></i></span>
-                    <span><i class="fa-solid fa-star"></i></span>
-                    <span><i class="fa-solid fa-star"></i></span>
-                    <span><i class="fa-solid fa-star"></i></span>
-                </div>
-                <div class="text-xs text-gray-500 ml-3">({{ item.stock }})</div>
-            </div> -->
+                                        <!-- <div class="flex flex-col md:flex-row items-center">
+                            <div class="flex gap-1 text-xs sm:text-sm text-yellow-400">
+                                <span><i class="fa-solid fa-star"></i></span>
+                                <span><i class="fa-solid fa-star"></i></span>
+                                <span><i class="fa-solid fa-star"></i></span>
+                                <span><i class="fa-solid fa-star"></i></span>
+                                <span><i class="fa-solid fa-star"></i></span>
+                            </div>
+                            <div class="text-xs text-gray-500 ml-3">({{ item.stock }})</div>
+                        </div> -->
                         </div>
                     </div>
                     <table class="table-auto border-collapse  text-left text-gray-600 text-xs ">
@@ -187,16 +187,16 @@
                         <dd class="mb-4 font-light text-gray-500 sm:mb-5 ">{{ productDetail.category }}</dd>
                     </dl>
 
-                    <div class="pb-4" v-for="(item, key) in parseJ(productDetail.productdetails)" :key="item"
-                        :index="key">
+                    <div class="pb-4" v-for="(item, key) in parseJ(productDetail.productdetails)" :key="item" :index="key">
                         <div>
                             <h3 class="text-sm text-gray-800 mb-3 uppercase font-medium">{{ key }}</h3>
                             <div class="flex items-center gap-2">
-                                <div class="size-selector" v-for="col in item" :key="col">
-                                    <input type="radio" :name="key" @click="checkboxClick(key, $event)"
-                                        :id="key + '-' + col.value" class="hidden" :value="col.value">
-                                    <label :for="key + '-' + col.value"
-                                        class="text-xs border border-gray-200 rounded-sm h-full w-full flex items-center justify-center cursor-pointer shadow-sm text-gray-600 px-2 py-1.5 ">{{
+                                <div class="sir" v-for="col in item" :key="col">
+                                    <input type="radio" :name="col.name" @click="checkboxClick(key, $event)"
+                                        :id="'size'+col.value" class="hidden " :class="'size'+col.value"
+                                        :value="col.value">
+                                    <label :for="'size'+col.value"
+                                        class="text-xs border border-gray-200 rounded-sm h-full w-full flex items-center justify-center cursor-pointer shadow-sm text-gray-600 px-2 py-1.5 label-checked:bg-green-600 label-checked:text-white">{{
                                             col.value }}</label>
                                 </div>
                             </div>
@@ -206,10 +206,9 @@
                         <div class="flex items-center space-x-3 sm:space-x-4">
                             <button @click="addToCart(productDetail.id, productDetail.price)" type="button"
                                 class="text-white inline-flex bg-primary items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
-                                <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor"
-                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
+                                <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
                                     </path>
                                     <path fill-rule="evenodd"
                                         d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
@@ -257,11 +256,12 @@
                         <div>
                             <h3 class="text-sm text-gray-800 mb-3 uppercase font-medium">{{ key }}</h3>
                             <div class="flex items-center gap-2">
-                                <div class="size-selector" v-for="col in item" :key="col">
-                                    <input type="radio" :name="key" @click="checkboxClick(key, $event)"
-                                        :id="key + '-' + col.value" class="hidden" :value="col.value">
-                                    <label :for="key + '-' + col.value"
-                                        class="text-xs border border-gray-200 rounded-sm h-full w-full flex items-center justify-center cursor-pointer shadow-sm text-gray-600 px-2 py-1.5 ">{{
+                                <div class="sir" v-for="col in item" :key="col">
+                                    <input type="radio" :name="col.name" @click="checkboxClick(key, $event)"
+                                        :id="'size'+col.value" class="hidden " :class="'size'+col.value"
+                                        :value="col.value">
+                                    <label :for="'size'+col.value"
+                                        class="text-xs border border-gray-200 rounded-sm h-full w-full flex items-center justify-center cursor-pointer shadow-sm text-gray-600 px-2 py-1.5 label-checked:bg-green-600 label-checked:text-white">{{
                                             col.value }}</label>
                                 </div>
                             </div>
@@ -271,10 +271,9 @@
                         <div class="flex items-center space-x-3 sm:space-x-4">
                             <button type="button" @click="addToWa(WaProduct)"
                                 class="text-white inline-flex bg-primary items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800">
-                                <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor"
-                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
+                                <svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
                                     </path>
                                     <path fill-rule="evenodd"
                                         d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
@@ -493,7 +492,7 @@ export default {
             const wa = "https://api.whatsapp.com/send?phone=6281222311396&text=" + text + "";
             window.location.href = wa;
         },
-        addToDetail(item){
+        addToDetail(item) {
             // window.location.reload()
             this.$router.push({ name: 'detailproduct', params: { name: item.name, id: item.id } })
         },
@@ -532,4 +531,5 @@ export default {
 .slide-fade-leave-to {
     transform: translateX(20px);
     opacity: 0;
-}</style>
+}
+</style>

@@ -43,8 +43,8 @@
                 <div class="space-y-2">
                     <p class="text-gray-800 font-semibold space-x-2">
                         <span>Stok: </span>
-                        <span class="text-green-600" v-if="product.stock > 0">In Stock</span>
-                        <span class="text-red-600" v-else>out of stock</span>
+                        <span class="text-green-600" v-if="product.stock > 0">{{ product.stock }}</span>
+                        <span class="text-red-600" v-else>Stok Habis</span>
                     </p>
                     <p class="space-x-2">
                         <span class="text-gray-800 font-semibold">Brand: </span>

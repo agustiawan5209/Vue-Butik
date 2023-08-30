@@ -46,7 +46,7 @@
       </form>
       <div class="relative flex flex-row justify-center items-center group hover:text-primary gap-2">
         <font-awesome-icon :icon="['fas', 'heart']" class="text-gray-800 group-hover:text-primary transition-all" />
-        <router-link :to="{name: 'account.wishlist'}" class="capitalize relative font-semibold">Wishlist</router-link>
+        <router-link :to="{ name: 'account.wishlist' }" class="capitalize relative font-semibold">Wishlist</router-link>
       </div>
       <!-- End Form Search -->
     </section>
@@ -310,4 +310,5 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   height: 0;
-}</style>
+}
+</style>
