@@ -17,8 +17,6 @@
             <div class=" col-span-1 relative box-border overflow-hidden flex items-center flex-col ">
                 <img :src="photoDefault" alt="product" class="thumbnail-galleries object-cover">
                 <div class="grid grid-cols-5 gap-4 mt-4">
-                    <!-- <img :src="'/../assets/images/products/product2.jpg'" alt="product2"
-                    class="w-full cursor-pointer border border-primary"> -->
                     <transition-group name="fade" v-if="product.galleries !== null">
                         <img v-for="gallerisitem in product.galleries" :key="gallerisitem.id" :src="gallerisitem.photo"
                             :class="gallerisitem.id == gallerisitemId ? 'border-primary' : ''" :alt="gallerisitem.photo"
