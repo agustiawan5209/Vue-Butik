@@ -281,7 +281,7 @@ export default {
       this.showDropdown = false
     },
     getUser() {
-      axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+      axios.get('http://127.0.0.1:8000/api/user', {
         headers: { Authorization: 'Bearer ' + this.access_token }
       })
         .then(res => {

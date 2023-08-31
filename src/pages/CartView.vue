@@ -160,14 +160,14 @@ export default {
     },
     created() {
      if(this.loggedIn){
-        axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+        axios.get('http://127.0.0.1:8000/api/user', {
             headers: { Authorization: 'Bearer ' + this.access_token }
         })
             .then(res => {
                 this.User = res.data;
 
                 // Get Cart User
-                axios.get('http://rtl-shop-admin.delapain.com/api/Cart/show', {
+                axios.get('http://127.0.0.1:8000/api/Cart/show', {
                     params: {
                         slug: res.data.id
                     }
@@ -200,7 +200,7 @@ export default {
             }).format(number);
         },
         async clearIDCart(id) {
-            axios.delete('http://rtl-shop-admin.delapain.com/api/Cart/delete', {
+            axios.delete('http://127.0.0.1:8000/api/Cart/delete', {
                 data: {
                     slug: id,
                 }

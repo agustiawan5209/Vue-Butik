@@ -16,6 +16,8 @@ import AccountInfo from "../pages/account/UserAccount.vue";
 import DashboardAccountView from "../pages/account/DashboardAccountView.vue";
 import WishlistView from "../pages/account/WishlistView.vue";
 import OrderStory from "../pages/account/OrderStoryView.vue";
+import DetailOrder from "../pages/account/DetailOrderView.vue";
+import PageNotFound from "../pages/PageNotFound.vue";
 // Auth Guard Vue Router
 function GuardRouter() {
     var isAuthenticated = false;
@@ -33,7 +35,7 @@ function GuardRouter() {
     }
 }
 const routes = [
-
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound },
     // Auth
     {
         path: '/login',
@@ -132,7 +134,16 @@ const routes = [
                 beforeEnter: GuardRouter,
                 component: OrderStory,
                 meta: {
-                    title: "Order Story"
+                    title: "Histori Pemesanan"
+                }
+            },
+            {
+                path: "/detailpesanan/:transaction_id",
+                name: "account.orderdetail",
+                beforeEnter: GuardRouter,
+                component: DetailOrder,
+                meta: {
+                    title: "Detail Order"
                 }
             }
         ],
@@ -143,6 +154,7 @@ const routes = [
 ]
 
 const router = createRouter({
+    // mode: 'history',
     history: createWebHistory(),
     routes,
 });

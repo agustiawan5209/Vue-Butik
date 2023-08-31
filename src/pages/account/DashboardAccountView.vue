@@ -28,7 +28,7 @@
                     </div> -->
                     <div class="flex-grow">
                         <p class="text-gray-600">Hello,</p>
-                        <h4 class="text-gray-800 font-medium">John Doe</h4>
+                        <!-- <h4 class="text-gray-800 font-medium">John Doe</h4> -->
                     </div>
                 </div>
 
@@ -162,7 +162,7 @@
                                 </span>
                                 My order history
                             </router-link>
-                            <a href="#" class="relative hover:text-primary block capitalize transition">
+                            <!-- <a href="#" class="relative hover:text-primary block capitalize transition">
                                 My returns
                             </a>
                             <a href="#" class="relative hover:text-primary block capitalize transition">
@@ -170,10 +170,10 @@
                             </a>
                             <a href="#" class="relative hover:text-primary block capitalize transition">
                                 My reviews
-                            </a>
+                            </a> -->
                         </div>
 
-                        <div class="space-y-1 pl-8 pt-4">
+                        <!-- <div class="space-y-1 pl-8 pt-4">
                             <a href="#" class="relative hover:text-primary block font-medium capitalize transition">
                                 <span class="absolute -left-8 top-0 text-base">
                                     <i class="fa-regular fa-credit-card"></i>
@@ -183,7 +183,7 @@
                             <a href="#" class="relative hover:text-primary block capitalize transition">
                                 voucher
                             </a>
-                        </div>
+                        </div> -->
 
                         <div class="space-y-1 pl-8 pt-4">
                             <router-link :to="{ name: 'account.wishlist' }"

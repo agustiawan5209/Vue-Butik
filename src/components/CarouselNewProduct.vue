@@ -76,7 +76,7 @@ export default defineComponent({
         }
     },
     mounted() {
-        axios.get('http://rtl-shop-admin.delapain.com/api/products', {
+        axios.get('http://127.0.0.1:8000/api/products', {
             params: {
                 order_by: 'desc',
                 limit: 8,
@@ -95,7 +95,7 @@ export default defineComponent({
         // Add To Cart
         addToCart(productID, priceProduct) {
             if (this.loggedIn == true) {
-                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+                axios.get('http://127.0.0.1:8000/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -103,7 +103,7 @@ export default defineComponent({
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('http://rtl-shop-admin.delapain.com/api/Cart/store', {
+                        axios.post('http://127.0.0.1:8000/api/Cart/store', {
                             user_id: UserData.id,
                             product_id: productID,
                             price: priceProduct,
@@ -132,7 +132,7 @@ export default defineComponent({
         },
         addWishlist(productID) {
             if (this.loggedIn) {
-                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+                axios.get('http://127.0.0.1:8000/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -140,7 +140,7 @@ export default defineComponent({
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('http://rtl-shop-admin.delapain.com/api/Wishlist/store', {
+                        axios.post('http://127.0.0.1:8000/api/Wishlist/store', {
                             user_id: UserData.id,
                             product_id: productID,
                         }).then((res) => {

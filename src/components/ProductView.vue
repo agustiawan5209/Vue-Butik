@@ -12,11 +12,11 @@
                             class="w-full object-cover drop-shadow-2xl">
                         <div
                             class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                            <a href="#" @click="addToDetail(item)"
+                            <router-link :to="{ name: 'detailproduct', params: { name: item.name, id: item.id } }" 
                                 class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                                 title="Detail">
                                 <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-                            </a>
+                            </router-link>
                             <a href="#" @click="addWishlist(item.id)" v-if="config.wishlist"
                                 class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
                                 title="Wishlist">
@@ -327,7 +327,7 @@ export default {
         }
     },
     beforeCreate() {
-        axios.get('http://rtl-shop-admin.delapain.com/api/config/product')
+        axios.get('http://127.0.0.1:8000/api/config/product')
             .then(res => {
                 const configApp = res.data.data
                 for (let i = 0; i < configApp.length; i++) {
@@ -389,7 +389,7 @@ export default {
         async addToCart(productID, priceProduct) {
 
             if (this.loggedIn) {
-                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+                axios.get('http://127.0.0.1:8000/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -404,7 +404,7 @@ export default {
                         }
                         // Send Data To Cart Database
                         axios({
-                            url: 'http://rtl-shop-admin.delapain.com/api/Cart/store',
+                            url: 'http://127.0.0.1:8000/api/Cart/store',
                             method: 'post',
                             data: params,
                             responseType: 'json',
@@ -436,7 +436,7 @@ export default {
         },
         addWishlist(productID) {
             if (this.loggedIn) {
-                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+                axios.get('http://127.0.0.1:8000/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -444,7 +444,7 @@ export default {
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('http://rtl-shop-admin.delapain.com/api/Wishlist/store', {
+                        axios.post('http://127.0.0.1:8000/api/Wishlist/store', {
                             user_id: UserData.id,
                             product_id: productID,
                         }).then((res) => {
@@ -478,7 +478,7 @@ export default {
             const enter = '%3A%0A';
             const spasi = '%20';
             // const koma = '%3A';
-            const link = 'http://rtl-shop-admin.delapain.com/View/' + item.name + '/' + item.id
+            const link = 'http://127.0.0.1:8000/View/' + item.name + '/' + item.id
             var text = `Produk${enter + spasi} Nama${spasi}Produk=${item.name}`
             text += `${enter + spasi} Harga${spasi}Produk=${item.price}`
             text += `${enter + spasi} Detail${enter}`
