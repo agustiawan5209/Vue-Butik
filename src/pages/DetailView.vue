@@ -190,7 +190,7 @@ export default {
         }
     },
     beforeCreate() {
-        axios.get('http://127.0.0.1:8000/api/config/product',)
+        axios.get('http://rtl-shop-admin.delapain.com/api/config/product',)
             .then(res => {
                 const configApp = res.data.data
                 for (let i = 0; i < configApp.length; i++) {
@@ -216,7 +216,7 @@ export default {
     },
     methods: {
         async init() {
-            axios.get('http://127.0.0.1:8000/api/products', {
+            axios.get('http://rtl-shop-admin.delapain.com/api/products', {
                 params: {
                     id: this.productId
                 }
@@ -227,7 +227,7 @@ export default {
                 this.photoDefault = this.product.galleriesdefault.photo;
                 this.gallerisitemId = this.product.galleriesdefault.id;
                 // Get Relate Product From API
-                axios.get('http://127.0.0.1:8000/api/products', {
+                axios.get('http://rtl-shop-admin.delapain.com/api/products', {
                     params: {
                         category: this.product.category,
                         // slug:this.product.brand,
@@ -269,7 +269,7 @@ export default {
         // Add To Cart
         addToCart(productID, priceProduct) {
             if (this.loggedIn) {
-                axios.get('http://127.0.0.1:8000/api/user', {
+                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -277,7 +277,7 @@ export default {
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('http://127.0.0.1:8000/api/Cart/store', {
+                        axios.post('http://rtl-shop-admin.delapain.com/api/Cart/store', {
                             user_id: UserData.id,
                             product_id: productID,
                             price: priceProduct,
@@ -306,7 +306,7 @@ export default {
         },
         addWishlist(productID) {
             if (this.loggedIn) {
-                axios.get('http://127.0.0.1:8000/api/user', {
+                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -314,7 +314,7 @@ export default {
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('http://127.0.0.1:8000/api/Wishlist/store', {
+                        axios.post('http://rtl-shop-admin.delapain.com/api/Wishlist/store', {
                             user_id: UserData.id,
                             product_id: productID,
                         }).then((res) => {
@@ -363,7 +363,7 @@ export default {
             }
             axios({
                 method: 'get',
-                url: 'http://127.0.0.1:8000/api/subgaleri',
+                url: 'http://rtl-shop-admin.delapain.com/api/subgaleri',
                 params: paramsData,
                 responseType: 'json',
             }).then((res) => {
@@ -389,7 +389,7 @@ export default {
             const enter = '%3A%0A';
             const spasi = '%20';
             // const koma = '%3A';
-            const link = 'http://127.0.0.1:8000/View/' + item.name + '/' + item.id
+            const link = 'http://rtl-shop-admin.delapain.com/View/' + item.name + '/' + item.id
             var text = `Produk${enter + spasi} Nama${spasi}Produk=${item.name}`
             text += `${enter + spasi} Harga${spasi}Produk=${item.price}`
             text += `${enter + spasi} Detail${enter}`
