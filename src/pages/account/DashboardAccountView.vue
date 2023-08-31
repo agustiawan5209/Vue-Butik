@@ -44,12 +44,12 @@
                             class="relative hover:text-primary block capitalize transition">
                             Profile information
                         </router-link>
-                        <a href="#" class="relative hover:text-primary block capitalize transition">
+                        <!-- <a href="#" class="relative hover:text-primary block capitalize transition">
                             Manage addresses
                         </a>
                         <a href="#" class="relative hover:text-primary block capitalize transition">
                             Change password
-                        </a>
+                        </a> -->
                     </div>
 
                     <div class="space-y-1 pl-8 pt-4">
@@ -58,9 +58,9 @@
                             <span class="absolute -left-8 top-0 text-base">
                                 <i class="fa-solid fa-box-archive"></i>
                             </span>
-                            My order history
+                            Transaksi Pemesanan
                         </router-link>
-                        <a href="#" class="relative hover:text-primary block capitalize transition">
+                        <!-- <a href="#" class="relative hover:text-primary block capitalize transition">
                             My returns
                         </a>
                         <a href="#" class="relative hover:text-primary block capitalize transition">
@@ -68,10 +68,10 @@
                         </a>
                         <a href="#" class="relative hover:text-primary block capitalize transition">
                             My reviews
-                        </a>
+                        </a> -->
                     </div>
 
-                    <div class="space-y-1 pl-8 pt-4">
+                    <!-- <div class="space-y-1 pl-8 pt-4">
                         <a href="#" class="relative hover:text-primary block font-medium capitalize transition">
                             <span class="absolute -left-8 top-0 text-base">
                                 <i class="fa-regular fa-credit-card"></i>
@@ -81,7 +81,7 @@
                         <a href="#" class="relative hover:text-primary block capitalize transition">
                             voucher
                         </a>
-                    </div>
+                    </div> -->
 
                     <div class="space-y-1 pl-8 pt-4">
                         <router-link :to="{ name: 'account.wishlist' }"
@@ -89,18 +89,18 @@
                             <span class="absolute -left-8 top-0 text-base">
                                 <i class="fa-regular fa-heart"></i>
                             </span>
-                            My wishlist
+                             wishlist
                         </router-link>
                     </div>
 
-                    <div class="space-y-1 pl-8 pt-4">
+                    <!-- <div class="space-y-1 pl-8 pt-4">
                         <a href="#" class="relative hover:text-primary block font-medium capitalize transition">
                             <span class="absolute -left-8 top-0 text-base">
                                 <i class="fa-regular fa-arrow-right-from-bracket"></i>
                             </span>
                             Logout
                         </a>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

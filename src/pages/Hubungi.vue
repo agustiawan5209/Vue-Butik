@@ -52,7 +52,7 @@ export default {
             } else {
                 axios({
                     method: 'post',
-                    url: 'http://127.0.0.1:8000/api/keluhan/store',
+                    url: 'http://rtl-shop-admin.delapain.com/api/keluhan/store',
                     data: this.pengguna,
                     responseType: 'json'
                 }).then(() => {

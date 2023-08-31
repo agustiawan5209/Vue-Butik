@@ -1,7 +1,7 @@
 <template>
     <div class="col-span-9">
         <!-- wishlist -->
-        <div class="col-span-9 space-y-4">
+        <div class="col-span-9 space-y-4" v-if="wishlist.length > 0">
             <div v-for="(item, index) in wishlist" :key="item.id" :index="index"
                 class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                 <div class="w-28">
@@ -23,6 +23,25 @@
             </div>
 
         </div>
+        <section class="bg-white dark:bg-gray-900" v-else>
+            <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+               
+                <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
+                    Wishlist Barang Anda Masih Kosong</p>
+                <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                    <router-link to="shop"
+                        class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary focus:ring-4 focus:ring-primary dark:focus:ring-primary">
+                        Belanja
+                        <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </router-link>
+                </div>
+            </div>
+        </section>
         <!-- ./wishlist -->
         <ModalView :show="showModal">
             <div class="relative p-4 bg-white rounded-lg shadow sm:p-5 overflow-auto">
@@ -116,14 +135,14 @@ export default {
     created() {
         // Get User Account
         if (this.loggedIn) {
-            axios.get('http://127.0.0.1:8000/api/user', {
+            axios.get('http://rtl-shop-admin.delapain.com/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             })
                 .then(res => {
                     this.User = res.data;
 
                     // Get Wishlist Data
-                    axios.get('http://127.0.0.1:8000/api/Wishlist/show', {
+                    axios.get('http://rtl-shop-admin.delapain.com/api/Wishlist/show', {
                         params: {
                             slug: res.data.id,
                         }
@@ -170,7 +189,7 @@ export default {
         },
         addToCart(productID, priceProduct) {
             if (this.loggedIn) {
-                axios.get('http://127.0.0.1:8000/api/user', {
+                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -184,7 +203,7 @@ export default {
                             detail: this.resultItem,
                         }
                         // Send Data To Cart Database
-                        axios.post('http://127.0.0.1:8000/api/Cart/store', params)
+                        axios.post('http://rtl-shop-admin.delapain.com/api/Cart/store', params)
                             .then((res) => {
                                 // // Modal Notification
                                 Swal.fire({
