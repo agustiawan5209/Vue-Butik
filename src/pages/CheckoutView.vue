@@ -160,10 +160,10 @@ export default {
                 return item.product_id
             })
             console.log(this.Cart)
-            axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+            axios.get('//rtl-shop-admin.delapain.com/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             }).then((res) => {
-                axios.post('http://rtl-shop-admin.delapain.com/api/checkout', {
+                axios.post('//rtl-shop-admin.delapain.com/api/checkout', {
                     user_id: res.data.id,
                     name: this.name,
                     email: this.email,

@@ -78,7 +78,7 @@ export default {
     methods: {
         login() {
 
-            axios.post("http://rtl-shop-admin.delapain.com/api/login", {
+            axios.post("//rtl-shop-admin.delapain.com/api/login", {
                 email: this.user.email,
                 password: this.user.password
             }).then(res => {

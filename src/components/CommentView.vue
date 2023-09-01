@@ -131,7 +131,7 @@ export default {
             };
             axios({
                 method: 'post',
-                url: 'http://rtl-shop-admin.delapain.com/api/Comment/store',
+                url: '//rtl-shop-admin.delapain.com/api/Comment/store',
                 data: params,
                 responseType: 'json',
             }).then((res) => {

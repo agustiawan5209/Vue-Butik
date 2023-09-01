@@ -327,7 +327,7 @@ export default {
         }
     },
     beforeCreate() {
-        axios.get('http://rtl-shop-admin.delapain.com/api/config/product')
+        axios.get('//rtl-shop-admin.delapain.com/api/config/product')
             .then(res => {
                 const configApp = res.data.data
                 for (let i = 0; i < configApp.length; i++) {
@@ -389,7 +389,7 @@ export default {
         async addToCart(productID, priceProduct) {
 
             if (this.loggedIn) {
-                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+                axios.get('//rtl-shop-admin.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -404,7 +404,7 @@ export default {
                         }
                         // Send Data To Cart Database
                         axios({
-                            url: 'http://rtl-shop-admin.delapain.com/api/Cart/store',
+                            url: '//rtl-shop-admin.delapain.com/api/Cart/store',
                             method: 'post',
                             data: params,
                             responseType: 'json',
@@ -436,7 +436,7 @@ export default {
         },
         addWishlist(productID) {
             if (this.loggedIn) {
-                axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+                axios.get('//rtl-shop-admin.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -444,7 +444,7 @@ export default {
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('http://rtl-shop-admin.delapain.com/api/Wishlist/store', {
+                        axios.post('//rtl-shop-admin.delapain.com/api/Wishlist/store', {
                             user_id: UserData.id,
                             product_id: productID,
                         }).then((res) => {
@@ -478,7 +478,7 @@ export default {
             const enter = '%3A%0A';
             const spasi = '%20';
             // const koma = '%3A';
-            const link = 'http://rtl-shop-admin.delapain.com/View/' + item.name + '/' + item.id
+            const link = '//rtl-shop-admin.delapain.com/View/' + item.name + '/' + item.id
             var text = `Produk${enter + spasi} Nama${spasi}Produk=${item.name}`
             text += `${enter + spasi} Harga${spasi}Produk=${item.price}`
             text += `${enter + spasi} Detail${enter}`

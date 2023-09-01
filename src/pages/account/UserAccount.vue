@@ -54,7 +54,7 @@ export default {
     }
   },
   created() {
-    axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+    axios.get('//rtl-shop-admin.delapain.com/api/user', {
       headers: { Authorization: 'Bearer ' + this.access_token }
     })
       .then(res => {
@@ -62,7 +62,7 @@ export default {
       }).catch(error => console.log(error))
   },
   mounted() {
-    axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+    axios.get('//rtl-shop-admin.delapain.com/api/user', {
       headers: { Authorization: 'Bearer ' + this.access_token }
     })
       .then(res => {

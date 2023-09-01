@@ -315,7 +315,7 @@ export default {
     },
     beforeCreate() {
         // Mengirim Kondisi apabila slug kosong
-        axios.get('http://rtl-shop-admin.delapain.com/api/categories')
+        axios.get('//rtl-shop-admin.delapain.com/api/categories')
             .then((res) => {
                 this.categories = res.data.data.data;
             })
@@ -330,7 +330,7 @@ export default {
 
         if (this.loggedIn == true) {
             // User
-            axios.get('http://rtl-shop-admin.delapain.com/api/user', {
+            axios.get('//rtl-shop-admin.delapain.com/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             })
                 .then(res => {
@@ -345,7 +345,7 @@ export default {
     },
 
     mounted() {
-        this.init('http://rtl-shop-admin.delapain.com/api/products')
+        this.init('//rtl-shop-admin.delapain.com/api/products')
         // View Product
 
     },
@@ -371,7 +371,7 @@ export default {
             target.classList.replace('translate-x-0', '-translate-x-full')
         },
         init(url = null) {
-            const pageUrl = url == null ? 'http://rtl-shop-admin.delapain.com/api/products' : url;
+            const pageUrl = url == null ? '//rtl-shop-admin.delapain.com/api/products' : url;
             // console.log(this.categoryName)
             if (this.categoryName.length > 0) {
                 axios.get(pageUrl, {
