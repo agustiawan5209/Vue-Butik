@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex flex-col max-w-full p-6 space-y-4 sm:p-10">
+        <div class="flex flex-col max-w-full pb-6 space-y-4 sm:p-10 border-2 border-black rounded-lg">
             <h2 class="text-xl font-semibold">Detail Pemesanan barang</h2>
             <div class="max-w-md p-8 sm:flex sm:space-x-6 dark:bg-gray-900 dark:text-gray-100">
 
@@ -109,7 +109,7 @@ export default {
         },
         GetTransaction(url) {
             if (this.loggedIn) {
-                axios.get("//rtl-shop-admin.delapain.com/api/user", {
+                axios.get("//admin-enerel.delapain.com/api/user", {
                     headers: { Authorization: "Bearer " + this.access_token }
                 })
                     .then(res => {
@@ -135,7 +135,7 @@ export default {
         }
     },
     mounted() {
-        this.GetTransaction("//rtl-shop-admin.delapain.com/api/transactions?transactions_id=" + this.transaction_id)
+        this.GetTransaction("//admin-enerel.delapain.com/api/transactions?transactions_id=" + this.transaction_id)
     },
     // components: { PaginationView }
 }

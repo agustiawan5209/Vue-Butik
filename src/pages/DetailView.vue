@@ -69,10 +69,13 @@
                         <h3 class="text-sm text-gray-800 mb-3 uppercase font-medium">{{ key }}</h3>
                         <div class="flex items-center gap-2">
                             <div class="size-selector group" v-for="col in item" :key="col">
-                                <input v-if="key =='Warna'" type="radio" @click="checkboxCek($event, key, col.product_id)" :name="key"
-                                    :id="key + '-' + col.value" class="hidden label-checked:bg-secondary label-checked:text-primary" :value="col.value" />
-                                <input v-else type="radio"  :name="key"
-                                    :id="key + '-' + col.value" class="hidden label-checked:bg-secondary label-checked:text-primary" :value="col.value" />
+                                <input v-if="key == 'Warna'" type="radio" @click="checkboxCek($event, key, col.product_id)"
+                                    :name="key" :id="key + '-' + col.value"
+                                    class="hidden label-checked:bg-secondary label-checked:text-primary"
+                                    :value="col.value" />
+                                <input v-else type="radio" :name="key" :id="key + '-' + col.value"
+                                    class="hidden label-checked:bg-secondary label-checked:text-primary"
+                                    :value="col.value" />
                                 <label :for="key + '-' + col.value"
                                     class="text-xs border border-gray-200  label-checked:bg-secondary label-checked:text-primary rounded-sm h-full w-full flex items-center justify-center cursor-pointer shadow-sm text-gray-600 px-2 py-1.5 ">{{
                                         col.value }}</label>
@@ -147,7 +150,7 @@
         <!-- ./description -->
 
         <!-- Comment -->
-        <CommentView  :dataComment="product" :comment="product.comment"/>
+        <CommentView :dataComment="product" :comment="product.comment" />
         <!-- /End Comment -->
 
         <!-- related product -->
@@ -190,7 +193,7 @@ export default {
         }
     },
     beforeCreate() {
-        axios.get('//rtl-shop-admin.delapain.com/api/config/product',)
+        axios.get('//admin-enerel.delapain.com/api/config/product',)
             .then(res => {
                 const configApp = res.data.data
                 for (let i = 0; i < configApp.length; i++) {
@@ -216,7 +219,7 @@ export default {
     },
     methods: {
         async init() {
-            axios.get('//rtl-shop-admin.delapain.com/api/products', {
+            axios.get('//admin-enerel.delapain.com/api/products', {
                 params: {
                     id: this.productId
                 }
@@ -227,7 +230,7 @@ export default {
                 this.photoDefault = this.product.galleriesdefault.photo;
                 this.gallerisitemId = this.product.galleriesdefault.id;
                 // Get Relate Product From API
-                axios.get('//rtl-shop-admin.delapain.com/api/products', {
+                axios.get('//admin-enerel.delapain.com/api/products', {
                     params: {
                         category: this.product.category,
                         // slug:this.product.brand,
@@ -269,32 +272,43 @@ export default {
         // Add To Cart
         addToCart(productID, priceProduct) {
             if (this.loggedIn) {
-                axios.get('//rtl-shop-admin.delapain.com/api/user', {
+                axios.get('//admin-enerel.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
                         // Get Data User
                         const UserData = res.data;
-
-                        // Send Data To Cart Database
-                        axios.post('//rtl-shop-admin.delapain.com/api/Cart/store', {
+                        const params = {
                             user_id: UserData.id,
                             product_id: productID,
                             price: priceProduct,
                             quantity: 1,
+                            detail: this.resultItem,
+                        }
+                        // Send Data To Cart Database
+                        // Send Data To Cart Database
+                        axios({
+                            url: '//admin-enerel.delapain.com/api/Cart/store',
+                            method: 'post',
+                            data: params,
+                            responseType: 'json',
                         }).then((res) => {
                             // // Modal Notification
                             Swal.fire({
                                 title: res.data.meta.message,
                                 confirmButtonText: 'Save',
-                            }).then((result) => {
-                                /* Read more about isConfirmed, isDenied below */
-                                if (result.isConfirmed) {
-                                    this.$router.push({ name: 'cart' })
-                                }
                             })
+                                .then((result) => {
+                                    /* Read more about isConfirmed, isDenied below */
+                                    if (result.isConfirmed) {
+                                        this.$router.push({ name: 'cart' }).then(() => { this.$router.go() })
+                                    }
+                                })
                         }).catch((err) => {
-                            console.log(err)
+                            Swal.fire({
+                                title: err.response.data.message,
+                                icon: 'error'
+                            })
                         })
 
                     }).catch(error => console.log(error))
@@ -306,7 +320,7 @@ export default {
         },
         addWishlist(productID) {
             if (this.loggedIn) {
-                axios.get('//rtl-shop-admin.delapain.com/api/user', {
+                axios.get('//admin-enerel.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -314,7 +328,7 @@ export default {
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('//rtl-shop-admin.delapain.com/api/Wishlist/store', {
+                        axios.post('//admin-enerel.delapain.com/api/Wishlist/store', {
                             user_id: UserData.id,
                             product_id: productID,
                         }).then((res) => {
@@ -363,7 +377,7 @@ export default {
             }
             axios({
                 method: 'get',
-                url: '//rtl-shop-admin.delapain.com/api/subgaleri',
+                url: '//admin-enerel.delapain.com/api/subgaleri',
                 params: paramsData,
                 responseType: 'json',
             }).then((res) => {
@@ -389,7 +403,7 @@ export default {
             const enter = '%3A%0A';
             const spasi = '%20';
             // const koma = '%3A';
-            const link = '//rtl-shop-admin.delapain.com/View/' + item.name + '/' + item.id
+            const link = '//admin-enerel.delapain.com/View/' + item.name + '/' + item.id
             var text = `Produk${enter + spasi} Nama${spasi}Produk=${item.name}`
             text += `${enter + spasi} Harga${spasi}Produk=${item.price}`
             text += `${enter + spasi} Detail${enter}`
@@ -419,5 +433,4 @@ export default {
 .img-product img {
     height: 217.77px !important;
     overflow: hidden;
-}
-</style>
+}</style>

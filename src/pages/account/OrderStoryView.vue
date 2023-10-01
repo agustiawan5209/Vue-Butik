@@ -104,7 +104,7 @@ export default {
         },
         GetTransaction(url) {
             if (this.loggedIn) {
-                axios.get("//rtl-shop-admin.delapain.com/api/user", {
+                axios.get("//admin-enerel.delapain.com/api/user", {
                     headers: { Authorization: "Bearer " + this.access_token }
                 })
                     .then(res => {
@@ -130,7 +130,7 @@ export default {
         }
     },
     mounted() {
-        this.GetTransaction("//rtl-shop-admin.delapain.com/api/transactions")
+        this.GetTransaction("//admin-enerel.delapain.com/api/transactions")
     },
     // components: { PaginationView }
 }

@@ -31,7 +31,7 @@
                 <dl class="max-w-full text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700 p-4">
                     <div class="flex flex-row pb-3 justify-between">
                         <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Sub Total</dt>
-                        <dd class="text-lg font-semibold">{{ rupiah(subtotal) }}</dd>
+                        <dd class="text-lg font-semibold text-black">{{ rupiah(subtotal) }}</dd>
                     </div>
                 </dl>
             </div>
@@ -160,10 +160,10 @@ export default {
                 return item.product_id
             })
             console.log(this.Cart)
-            axios.get('//rtl-shop-admin.delapain.com/api/user', {
+            axios.get('//admin-enerel.delapain.com/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             }).then((res) => {
-                axios.post('//rtl-shop-admin.delapain.com/api/checkout', {
+                axios.post('//admin-enerel.delapain.com/api/checkout', {
                     user_id: res.data.id,
                     name: this.name,
                     email: this.email,

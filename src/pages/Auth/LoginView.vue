@@ -78,13 +78,12 @@ export default {
     methods: {
         login() {
 
-            axios.post("//rtl-shop-admin.delapain.com/api/login", {
+            axios.post("//admin-enerel.delapain.com/api/login", {
                 email: this.user.email,
                 password: this.user.password
             }).then(res => {
 
                 //debug user login
-                console.log(res)
 
                 if (res.status == 200) {
 
@@ -108,8 +107,8 @@ export default {
                 }
 
             }).catch(error => {
-                const response = error.response.data;
-                console.log(response.meta.message)
+                // const response = error.response.data;
+                console.log(error)
 
             })
 

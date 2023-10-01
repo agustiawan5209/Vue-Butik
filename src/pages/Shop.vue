@@ -221,7 +221,7 @@
                         <option value="latest">Terbaru</option>
                     </select>
 
-                    <div class="flex gap-2 ml-auto">
+                    <!-- <div class="flex gap-2 ml-auto">
                         <div @click="listOrBarItemShopFunc('BAR')"
                             :class="listOrBarItemShop == 'BAR' ? 'border-primary text-white bg-primary' : 'border-gray-300 text-gray-600 bg-transparent'"
                             class="border  w-10 h-9 flex items-center justify-center  rounded cursor-pointer transition ease-in">
@@ -232,7 +232,7 @@
                             class="border w-10 h-9 flex items-center justify-center  rounded cursor-pointer transition ease-in">
                             <font-awesome-icon :icon="['fas', 'list']" />
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <ProductView :product="product.data" :listOrBarItemShop="listOrBarItemShop"
@@ -315,7 +315,7 @@ export default {
     },
     beforeCreate() {
         // Mengirim Kondisi apabila slug kosong
-        axios.get('//rtl-shop-admin.delapain.com/api/categories')
+        axios.get('//admin-enerel.delapain.com/api/categories')
             .then((res) => {
                 this.categories = res.data.data.data;
             })
@@ -330,7 +330,7 @@ export default {
 
         if (this.loggedIn == true) {
             // User
-            axios.get('//rtl-shop-admin.delapain.com/api/user', {
+            axios.get('//admin-enerel.delapain.com/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             })
                 .then(res => {
@@ -345,7 +345,7 @@ export default {
     },
 
     mounted() {
-        this.init('//rtl-shop-admin.delapain.com/api/products')
+        this.init('//admin-enerel.delapain.com/api/products')
         // View Product
 
     },
@@ -371,7 +371,7 @@ export default {
             target.classList.replace('translate-x-0', '-translate-x-full')
         },
         init(url = null) {
-            const pageUrl = url == null ? '//rtl-shop-admin.delapain.com/api/products' : url;
+            const pageUrl = url == null ? '//admin-enerel.delapain.com/api/products' : url;
             // console.log(this.categoryName)
             if (this.categoryName.length > 0) {
                 axios.get(pageUrl, {

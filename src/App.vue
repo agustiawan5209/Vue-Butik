@@ -281,7 +281,7 @@ export default {
       this.showDropdown = false
     },
     getUser() {
-      axios.get('//rtl-shop-admin.delapain.com/api/user', {
+      axios.get('//admin-enerel.delapain.com/api/user', {
         headers: { Authorization: 'Bearer ' + this.access_token }
       })
         .then(res => {
@@ -290,6 +290,7 @@ export default {
           this.WishlistLenght = res.data.wishlist.length;
         }).catch(error => {
           const resError = error.response;
+          console.log(error)
           if (resError.status === 401 && resError.statusText === "Unauthorized") {
             localStorage.removeItem('token')
             localStorage.removeItem('token_type')

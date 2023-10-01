@@ -1,7 +1,7 @@
 <template>
     <KeepAlive>
         <div class="w-full">
-            <transition-group :key="listOrBarItemShop" name="slide-fade" tag="div" :class="grid"
+            <transition-group :key="'BAR'" name="slide-fade" tag="div" :class="grid"
                 class="grid grid-cols-1 gap-6" v-if="listOrBarItemShop == 'BAR'">
                 <div class="bg-white  rounded h-full overflow-hidden group img-product transition-all ease-in"
                     v-for="(item, index) in product" :key="item.id" :index="index">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </transition-group>
-            <transition-group :key="listOrBarItemShop" name="slide-fade" tag="div" class="grid  grid-cols-1 gap-6"
+            <transition-group :key="'LIST'" name="slide-fade" tag="div" class="grid grid-cols-1 gap-6"
                 v-if="listOrBarItemShop == 'LIST'">
                 <div class="bg-white shadow border rounded overflow-hidden group transition-all ease-in flex flex-col md:flex-row justify-between"
                     v-for="(item, index) in product" :key="item.id" :index="index">
@@ -182,7 +182,7 @@
                     </div>
                     <dl>
                         <dt class="mb-2 font-semibold leading-none text-gray-900 ">Details</dt>
-                        <dd class="mb-4 font-light text-gray-500 sm:mb-5 ">{{ productDetail.description }}.</dd>
+                        <dd class="mb-4 font-light text-gray-500 sm:mb-5 "><span v-html="productDetail.description"></span></dd>
                         <dt class="mb-2 font-semibold leading-none text-gray-900 ">Category</dt>
                         <dd class="mb-4 font-light text-gray-500 sm:mb-5 ">{{ productDetail.category }}</dd>
                     </dl>
@@ -247,7 +247,7 @@
                     </div>
                     <dl>
                         <dt class="mb-2 font-semibold leading-none text-gray-900 ">Details</dt>
-                        <dd class="mb-4 font-light text-gray-500 sm:mb-5 ">{{ WaProduct.description }}.</dd>
+                        <dd class="mb-4 font-light text-gray-500 sm:mb-5 "><span v-html="productDetail.description"></span></dd>
                         <dt class="mb-2 font-semibold leading-none text-gray-900 ">Category</dt>
                         <dd class="mb-4 font-light text-gray-500 sm:mb-5 ">{{ WaProduct.category }}</dd>
                     </dl>
@@ -327,7 +327,7 @@ export default {
         }
     },
     beforeCreate() {
-        axios.get('//rtl-shop-admin.delapain.com/api/config/product')
+        axios.get('//admin-enerel.delapain.com/api/config/product')
             .then(res => {
                 const configApp = res.data.data
                 for (let i = 0; i < configApp.length; i++) {
@@ -389,7 +389,7 @@ export default {
         async addToCart(productID, priceProduct) {
 
             if (this.loggedIn) {
-                axios.get('//rtl-shop-admin.delapain.com/api/user', {
+                axios.get('//admin-enerel.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -404,7 +404,7 @@ export default {
                         }
                         // Send Data To Cart Database
                         axios({
-                            url: '//rtl-shop-admin.delapain.com/api/Cart/store',
+                            url: '//admin-enerel.delapain.com/api/Cart/store',
                             method: 'post',
                             data: params,
                             responseType: 'json',
@@ -436,7 +436,7 @@ export default {
         },
         addWishlist(productID) {
             if (this.loggedIn) {
-                axios.get('//rtl-shop-admin.delapain.com/api/user', {
+                axios.get('//admin-enerel.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -444,7 +444,7 @@ export default {
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('//rtl-shop-admin.delapain.com/api/Wishlist/store', {
+                        axios.post('//admin-enerel.delapain.com/api/Wishlist/store', {
                             user_id: UserData.id,
                             product_id: productID,
                         }).then((res) => {
@@ -478,7 +478,7 @@ export default {
             const enter = '%3A%0A';
             const spasi = '%20';
             // const koma = '%3A';
-            const link = '//rtl-shop-admin.delapain.com/View/' + item.name + '/' + item.id
+            const link = '//admin-enerel.delapain.com/View/' + item.name + '/' + item.id
             var text = `Produk${enter + spasi} Nama${spasi}Produk=${item.name}`
             text += `${enter + spasi} Harga${spasi}Produk=${item.price}`
             text += `${enter + spasi} Detail${enter}`

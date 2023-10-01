@@ -98,7 +98,7 @@
 
                 <div class="bg-white shadow rounded p-4 divide-y divide-gray-200 text-gray-600 flex justify-end">
                     <ul class="w-full md:w-96 py-2 md:py-6 px-4 md:px-8">
-                        <li class="border-b py-2 px-3">
+                        <!-- <li class="border-b py-2 px-3">
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-2 items-start">
                                 <span>Total</span> : <span>{{ rupiah(total) }}</span>
                             </div>
@@ -112,7 +112,7 @@
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-2 items-start">
                                 <span>Pajak</span> : <span>{{ rupiah(tax * total )}}</span>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="border-b py-2 px-3">
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-2 items-start">
                                 <span>Sub Total</span> : <span>{{ rupiah(subtotal) }}</span>
@@ -160,14 +160,14 @@ export default {
     },
     created() {
      if(this.loggedIn){
-        axios.get('//rtl-shop-admin.delapain.com/api/user', {
+        axios.get('//admin-enerel.delapain.com/api/user', {
             headers: { Authorization: 'Bearer ' + this.access_token }
         })
             .then(res => {
                 this.User = res.data;
 
                 // Get Cart User
-                axios.get('//rtl-shop-admin.delapain.com/api/Cart/show', {
+                axios.get('//admin-enerel.delapain.com/api/Cart/show', {
                     params: {
                         slug: res.data.id
                     }
@@ -191,7 +191,7 @@ export default {
     methods: {
         CartPieces(total) {
             this.total = total;
-            this.subtotal = (total - this.discount) + (total * this.tax);
+            this.subtotal = total;
         },
         rupiah(number) {
             return new Intl.NumberFormat("id-ID", {
@@ -200,7 +200,7 @@ export default {
             }).format(number);
         },
         async clearIDCart(id) {
-            axios.delete('//rtl-shop-admin.delapain.com/api/Cart/delete', {
+            axios.delete('//admin-enerel.delapain.com/api/Cart/delete', {
                 data: {
                     slug: id,
                 }

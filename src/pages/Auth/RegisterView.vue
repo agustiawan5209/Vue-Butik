@@ -115,7 +115,7 @@ export default {
         register() {
 
             axios({
-                url: "//rtl-shop-admin.delapain.com/api/register",
+                url: "//admin-enerel.delapain.com/api/register",
                 method: 'post',
                 data: this.validation,
                 headers: { "Content-Type": "multipart/form-data" },

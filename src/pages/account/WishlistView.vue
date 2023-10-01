@@ -1,15 +1,15 @@
 <template>
     <div class="col-span-9">
         <!-- wishlist -->
-        <div class="col-span-9 space-y-4" v-if="wishlist.length > 0">
-            <div v-for="(item, index) in wishlist" :key="item.id" :index="index"
+        <div class="col-span-9 space-y-4" v-if="wishlistLength > 0">
+            <div v-for="(item, index) in DataHarapan" :key="item.id" :index="index"
                 class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
-                <div class="w-28">
+                <div class="w-28" v-if="item.product.galleriesdefault !== null">
                     <img :src="item.product.galleriesdefault.photo" alt="product 6" class="w-full">
                 </div>
                 <div class="w-1/3">
                     <h2 class="text-gray-800 text-xl font-medium uppercase">{{ item.product.name }}</h2>
-                    <p class="text-gray-500 text-sm">Stok: <span class="text-green-600">In Stock</span></p>
+                    <p class="text-gray-500 text-sm">Stok: <span class="text-green-600">I{{item.product.stok}}</span></p>
                 </div>
                 <div class="text-primary text-lg font-semibold">{{ rupiah(item.product.price) }}</div>
                 <a href="#" @click="ModalCart(item.product)"
@@ -123,6 +123,8 @@ export default {
             access_token: localStorage.getItem('token'),
             loggedIn: localStorage.getItem('loggedIn'),
             wishlist: [],
+            wishlistLength: 0,
+            DataHarapan: [],
             showModal: false,
             productDetail: [],
             checkboxItem: new Array,
@@ -132,23 +134,26 @@ export default {
     components: {
         ModalView,
     },
-    created() {
+    mounted() {
         // Get User Account
         if (this.loggedIn) {
-            axios.get('//rtl-shop-admin.delapain.com/api/user', {
+            axios.get('//admin-enerel.delapain.com/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             })
                 .then(res => {
                     this.User = res.data;
 
                     // Get Wishlist Data
-                    axios.get('//rtl-shop-admin.delapain.com/api/Wishlist/show', {
+                    axios.get('//admin-enerel.delapain.com/api/Wishlist/show', {
                         params: {
                             slug: res.data.id,
                         }
-                    }).then((res) => {
-                        this.wishlist = res.data.data;
-                        console.log(res.data.data)
+                    })
+                    .then((resWis) => {
+                       const ElementData = resWis.data;
+                        this.wishlist = ElementData;
+                        this.DataHarapan = ElementData.data;
+                        this.wishlistLength = ElementData.data.length
                     }).catch(err => console.log(err))
                     // End Wishlist
                 }).catch(error => console.log(error))
@@ -189,7 +194,7 @@ export default {
         },
         addToCart(productID, priceProduct) {
             if (this.loggedIn) {
-                axios.get('//rtl-shop-admin.delapain.com/api/user', {
+                axios.get('//admin-enerel.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -203,7 +208,7 @@ export default {
                             detail: this.resultItem,
                         }
                         // Send Data To Cart Database
-                        axios.post('//rtl-shop-admin.delapain.com/api/Cart/store', params)
+                        axios.post('//admin-enerel.delapain.com/api/Cart/store', params)
                             .then((res) => {
                                 // // Modal Notification
                                 Swal.fire({
