@@ -9,7 +9,6 @@ import Shop from '../pages/Shop.vue';
 import About from '../pages/About.vue';
 import Login from '../pages/auth/LoginView.vue';
 import Register from '../pages/auth/RegisterView.vue';
-
 import CartView from '../pages/CartView.vue';
 import HubungiKami from '../pages/Hubungi.vue';
 import AccountInfo from "../pages/account/UserAccount.vue";

@@ -1,8 +1,8 @@
 <template>
     <div class="col-span-9">
         <!-- wishlist -->
-        <div class="col-span-9 space-y-4" v-if="wishlistLength > 0">
-            <div v-for="(item, index) in DataHarapan" :key="item.id" :index="index"
+        <div class="col-span-9 space-y-4" v-if="wishlist.length > 0">
+            <div v-for="(item, index) in wishlist" :key="item.id" :index="index"
                 class="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                 <div class="w-28" v-if="item.product.galleriesdefault !== null">
                     <img :src="item.product.galleriesdefault.photo" alt="product 6" class="w-full">
@@ -151,10 +151,18 @@ export default {
                     })
                     .then((resWis) => {
                        const ElementData = resWis.data;
-                        this.wishlist = ElementData;
-                        this.DataHarapan = ElementData.data;
-                        this.wishlistLength = ElementData.data.length
-                    }).catch(err => console.log(err))
+                       console.log(ElementData.data.length);
+                       this.wishlist = ElementData.data;
+                    //     this.wishlist = ElementData;
+                    //     this.DataHarapan = ElementData.data;
+                    //     this.wishlistLength = ElementData.data.length
+                    }).catch(err => {
+                        Swal.fire({
+                            title: 'Terjadi Kesalahan',
+                            text: err.response,
+                        })
+                        console.log(err);
+                    })
                     // End Wishlist
                 }).catch(error => console.log(error))
         }
