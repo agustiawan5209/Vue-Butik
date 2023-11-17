@@ -44,10 +44,10 @@
           placeholder="search" />
         <button class="bg-primary text-white w-20 rounded-r-lg">Cari</button>
       </form>
-      <div class="relative flex flex-row justify-center items-center group hover:text-primary gap-2">
+      <!-- <div class="relative flex flex-row justify-center items-center group hover:text-primary gap-2">
         <font-awesome-icon :icon="['fas', 'heart']" class="text-gray-800 group-hover:text-primary transition-all" />
         <router-link :to="{ name: 'account.wishlist' }" class="capitalize relative font-semibold">Wishlist</router-link>
-      </div>
+      </div> -->
       <!-- End Form Search -->
     </section>
     <!-- End Logo And Form Search -->

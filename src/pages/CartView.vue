@@ -20,7 +20,7 @@
                 <transition-group name="fade" v-if="Cart.length > 0">
                     <div  class="grid grid-cols-2 md:grid-cols-6 justify-items-stretch items-center border gap-6 p-4 border-gray-200 rounded"
                         v-for="(item, index) in Cart" :key="item.id" :index="index">
-                        <div class="w-auto md:w-28">
+                        <div class="w-auto md:w-28" v-if="item.product.galleriesdefault != null">
                             <img :src="item.product.galleriesdefault.photo" alt="product 6" class="w-full">
                         </div>
                         <div class="w-1/2">

@@ -17,7 +17,7 @@
             <div class="col-span-5 bg-transparent">
                 <div class="grid grid-cols-3 justify-items-center items-center border gap-6 p-4 border-gray-200 rounded"
                     v-for="(item, index) in Cart" :key="item.id" :index="index">
-                    <div class="w-28">
+                    <div class="w-28" v-if="item.product.galleriesdefault != null">
                         <img :src="item.product.galleriesdefault.photo" alt="product 6" class="w-full">
                     </div>
                     <div class="w-1/3 flex flex-col">
@@ -159,7 +159,6 @@ export default {
             let idProduk = this.Cart.map((item) => {
                 return item.product_id
             })
-            console.log(this.Cart)
             axios.get('//admin-enerel.delapain.com/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             }).then((res) => {
@@ -174,12 +173,16 @@ export default {
                     transaction_details: idProduk,
                     transaction_product: this.Cart,
                 })
-                    .then(() => {
-                        this.$router.push({ name: 'success' })
+                    .then((res) => {
+                        console.log(res)
+                        const data = res.data.meta;
+                        if (data.status === 'Success' || data.code === 200) {
+                            this.$router.push({ name: 'success' })
 
-                        localStorage.removeItem('cart')
-                        localStorage.removeItem('subtotal')
-                        localStorage.removeItem('quantityItem')
+                            localStorage.removeItem('cart')
+                            localStorage.removeItem('subtotal')
+                            localStorage.removeItem('quantityItem')
+                        }
                     })
                     .catch(error => console.log(error.response.data))
             }).catch(error => console.log(error))

@@ -76,13 +76,14 @@ export default defineComponent({
         }
     },
     mounted() {
-        axios.get('//admin-enerel.delapain.com/api/products', {
+        axios.get('//admin-enerel.delapain.com/api/products/laris', {
             params: {
                 order_by: 'asc',
                 limit: 4,
             }
         }).then((res) => {
-            this.carouselItem = res.data.data.data;
+            console.log(res.data.data)
+            this.carouselItem = res.data.data;
         })
     },
     methods: {

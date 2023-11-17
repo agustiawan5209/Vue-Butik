@@ -3,14 +3,14 @@
         <div class="w-full">
             <transition-group :key="'BAR'" name="slide-fade" tag="div" :class="grid"
                 class="grid grid-cols-1 gap-6" v-if="listOrBarItemShop == 'BAR'">
-                <div class="bg-white  rounded h-full overflow-hidden group img-product transition-all ease-in"
+                <router-link :to="{ name: 'detailproduct', params: { name: item.name, id: item.id } }"  class="bg-white  rounded h-full overflow-hidden group img-product transition-all ease-in"
                     v-for="(item, index) in product" :key="item.id" :index="index">
                     <div class="relative" :class="item.stock > 0 ? '' : 'opacity-70 cursor-not-allowed bg-red-500'">
                         <img :src="item.galleriesdefault.photo" v-if="item.galleries.length > 0" :alt="item.name"
                             class="w-full object-cover">
                         <img :src="'img/katalog/katalog1.jpg'" v-else :alt="item.name"
                             class="w-full object-cover drop-shadow-2xl">
-                        <div
+                        <!-- <div
                             class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                             <router-link :to="{ name: 'detailproduct', params: { name: item.name, id: item.id } }" 
                                 class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
@@ -22,7 +22,7 @@
                                 title="Wishlist">
                                 <font-awesome-icon :icon="['fas', 'heart']" />
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="pt-4 pb-3 px-4 h-max md:h-[140px] shadow-lg shadow-black border"
                         :class="item.stock > 0 ? '' : 'opacity-70 cursor-not-allowed'">
@@ -65,7 +65,7 @@
                             WhatsApp
                         </a>
                     </div>
-                </div>
+                </router-link>
             </transition-group>
             <transition-group :key="'LIST'" name="slide-fade" tag="div" class="grid grid-cols-1 gap-6"
                 v-if="listOrBarItemShop == 'LIST'">
@@ -115,11 +115,11 @@
                             title="view product">
                             Detail
                         </router-link>
-                        <a href="#" @click="addWishlist(item.id)" v-if="config.wishlist"
+                        <!-- <a href="#" @click="addWishlist(item.id)" v-if="config.wishlist"
                             class="block w-full py-1.5 px-2 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition text-xs sm:text-sm md:text-base whitespace-nowrap"
                             title="add to wishlist">
                             Wishlist
-                        </a>
+                        </a> -->
                         <a href="#" @click="ModalCart(item.id, item.price)" v-if="config.cart"
                             class="block w-full py-1.5 px-2 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition text-xs md:text-base whitespace-nowrap">
                             Keranjang</a>
@@ -136,11 +136,11 @@
                             title="view product">
                             Detail
                         </a>
-                        <a href="#" v-if="config.wishlist"
+                        <!-- <a href="#" v-if="config.wishlist"
                             class="block w-full py-1.5 px-2 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition text-xs sm:text-sm md:text-base whitespace-nowrap opacity-70 cursor-not-allowed"
                             title="add to wishlist">
                             Wishlist
-                        </a>
+                        </a> -->
                         <a href="#" v-if="config.cart"
                             class="block w-full py-1.5 px-2 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition text-xs md:text-base whitespace-nowrap opacity-70 cursor-not-allowed">Keranjang
                         </a>
