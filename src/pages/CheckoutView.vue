@@ -53,8 +53,8 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF
                                         (MAX. 800x400px)</p>
                                 </div>
-                                <input id="dropzone-file" @change="fileSelected($event)" type="file" class="hidden"
-                                    required />
+                                <input id="dropzone-file" @change="fileSelected($event)" type="file" class="hidden" name="file"
+                                     />
                             </label>
                             <div v-else class=" p-2 border border-primary">
                                 <img :src="URLFile" alt="Image" class="w-full h-full object-cover">
@@ -110,6 +110,8 @@
 <script>
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 export default {
     data() {
         return {
@@ -159,7 +161,14 @@ export default {
             let idProduk = this.Cart.map((item) => {
                 return item.product_id
             })
-            axios.get('//admin-enerel.delapain.com/api/user', {
+            if (this.file == null) {
+                Swal.fire({
+                    title: "Bukti Transaksi Kosong" ,
+                    text: 'Harap Bukti Transaksi Di Isi Untuk Melanjutkan',
+                    confirmButtonText: 'Keluar',
+                })
+            }else{
+                axios.get('//admin-enerel.delapain.com/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             }).then((res) => {
                 axios.post('//admin-enerel.delapain.com/api/checkout', {
@@ -187,6 +196,9 @@ export default {
                     .catch(error => console.log(error.response.data))
             }).catch(error => console.log(error))
 
+            }
+            
+          
 
         }
     }
