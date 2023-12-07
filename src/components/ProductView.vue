@@ -327,7 +327,7 @@ export default {
         }
     },
     beforeCreate() {
-        axios.get('//admin-enerel.delapain.com/api/config/product')
+        axios.get('//127.0.0.1:8000/api/config/product')
             .then(res => {
                 const configApp = res.data.data
                 for (let i = 0; i < configApp.length; i++) {
@@ -389,7 +389,7 @@ export default {
         async addToCart(productID, priceProduct) {
 
             if (this.loggedIn) {
-                axios.get('//admin-enerel.delapain.com/api/user', {
+                axios.get('//127.0.0.1:8000/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -404,7 +404,7 @@ export default {
                         }
                         // Send Data To Cart Database
                         axios({
-                            url: '//admin-enerel.delapain.com/api/Cart/store',
+                            url: '//127.0.0.1:8000/api/Cart/store',
                             method: 'post',
                             data: params,
                             responseType: 'json',
@@ -436,7 +436,7 @@ export default {
         },
         addWishlist(productID) {
             if (this.loggedIn) {
-                axios.get('//admin-enerel.delapain.com/api/user', {
+                axios.get('//127.0.0.1:8000/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -444,7 +444,7 @@ export default {
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('//admin-enerel.delapain.com/api/Wishlist/store', {
+                        axios.post('//127.0.0.1:8000/api/Wishlist/store', {
                             user_id: UserData.id,
                             product_id: productID,
                         }).then((res) => {
@@ -478,7 +478,7 @@ export default {
             const enter = '%3A%0A';
             const spasi = '%20';
             // const koma = '%3A';
-            const link = '//admin-enerel.delapain.com/View/' + item.name + '/' + item.id
+            const link = '//127.0.0.1:8000/View/' + item.name + '/' + item.id
             var text = `Produk${enter + spasi} Nama${spasi}Produk=${item.name}`
             text += `${enter + spasi} Harga${spasi}Produk=${item.price}`
             text += `${enter + spasi} Detail${enter}`

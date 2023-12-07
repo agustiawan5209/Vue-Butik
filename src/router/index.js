@@ -67,8 +67,8 @@ const routes = [
         component: About,
     },
     {
-        path: '/hubungi-kami',
-        name: 'hubungi',
+        path: '/testimoni-kami',
+        name: 'testimoni',
         component: HubungiKami,
     },
 

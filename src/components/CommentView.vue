@@ -131,7 +131,7 @@ export default {
             };
             axios({
                 method: 'post',
-                url: '//admin-enerel.delapain.com/api/Comment/store',
+                url: '//127.0.0.1:8000/api/Comment/store',
                 data: params,
                 responseType: 'json',
             }).then((res) => {

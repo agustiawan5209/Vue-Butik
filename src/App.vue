@@ -102,10 +102,10 @@
           <font-awesome-icon :icon="['fas', 'user']" class="transition-all" />
           <span class="capitalize relative font-semibold">Tentang Kami</span>
         </router-link>
-        <router-link :to="{ name: 'hubungi' }" class="relative flex flex-row justify-center items-center group gap-2"
+        <router-link :to="{ name: 'testimoni' }" class="relative flex flex-row justify-center items-center group gap-2"
           :active-class="activeClass">
           <font-awesome-icon :icon="['fas', 'comments']" class="transition-all" />
-          <span class="capitalize relative font-semibold">Hubungi Kami</span>
+          <span class="capitalize relative font-semibold">Testimoni</span>
         </router-link>
       </ul>
       <!-- End Navigation -->
@@ -271,7 +271,9 @@ export default {
     }
   },
   mounted() {
-    this.getUser()
+    if (this.loggedIn == "true" || this.loggedIn == true) {
+      this.getUser()
+    }
   },
   methods: {
     dropdownShow() {
@@ -281,7 +283,7 @@ export default {
       this.showDropdown = false
     },
     getUser() {
-      axios.get('//admin-enerel.delapain.com/api/user', {
+      axios.get('//127.0.0.1:8000/api/user', {
         headers: { Authorization: 'Bearer ' + this.access_token }
       })
         .then(res => {

@@ -33,6 +33,10 @@
                         <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Sub Total</dt>
                         <dd class="text-lg font-semibold text-black">{{ rupiah(subtotal) }}</dd>
                     </div>
+                    <div class="flex flex-row pb-3 justify-between">
+                        <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Estimasi Waktu Pembayaran</dt>
+                        <dd class="text-lg font-semibold text-black">{{ waktuTersisa }}</dd>
+                    </div>
                 </dl>
             </div>
             <div class="col-span-7  pb-5 pt-2 px-8 border flex flex-col justify-center items-start">
@@ -53,8 +57,8 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF
                                         (MAX. 800x400px)</p>
                                 </div>
-                                <input id="dropzone-file" @change="fileSelected($event)" type="file" class="hidden" name="file"
-                                     />
+                                <input id="dropzone-file" @change="fileSelected($event)" type="file" class="hidden"
+                                    name="file" />
                             </label>
                             <div v-else class=" p-2 border border-primary">
                                 <img :src="URLFile" alt="Image" class="w-full h-full object-cover">
@@ -128,6 +132,8 @@ export default {
             address: 'Jl. Pendidikan',
             file: null,
             URLFile: null,
+            estimasi: Number(localStorage.getItem('estimasi')),
+            waktuTersisa: null,
         }
     },
     mounted() {
@@ -137,15 +143,67 @@ export default {
         const parseJSONQuantityItem = JSON.parse(decryptedQuantityItem.toString(CryptoJS.enc.Utf8));
         this.Cart = parseJSON;
         this.quantityItem = parseJSONQuantityItem;
-        console.log(parseJSONQuantityItem)
         for (let i = 0; i < this.Cart.length; i++) {
             const element = this.Cart[i];
             element.price = this.quantityItem[i].price
             element.quantity = this.quantityItem[i].quantity
         }
+        try {
+            this.tampilkanWaktuTersisa(this.estimasi); // ID elemen HTML yang akan menampilkan waktu tersisa adalah "waktuTersisa"
+        } catch (error) {
+            console.error(error.message);
+        }
 
     },
     methods: {
+        hitungWaktuTersisa(menit) {
+            if (isNaN(menit)) {
+                throw new Error("Input harus berupa angka");
+            }
+
+            if (menit <= 0) {
+                throw new Error("Input harus lebih besar dari 0");
+            }
+
+            if (menit > 10) {
+                
+                throw new Error("Proses pembayaran melebihi batas waktu yang ditentukan");
+                
+            }
+            if(this.estimasi == 0 || this.estimasi < 1){
+                localStorage.removeItem('cart');
+                localStorage.removeItem('subtotal');
+                localStorage.removeItem('quantityItem');
+                localStorage.removeItem('estimasi');
+                this.$router.push({name: 'cart'})
+            }
+
+            return menit;
+        },
+        tampilkanWaktuTersisa(menit) {
+            try {
+                let waktuTersisa = this.hitungWaktuTersisa(menit);
+                let jam = Math.floor(waktuTersisa / 60);
+                let sisaMenit = waktuTersisa % 60;
+
+                if (jam > 0) {
+                    this.waktuTersisa = jam + " jam " + sisaMenit + " menit";
+                } else {
+                    this.waktuTersisa = sisaMenit + " menit";
+                    localStorage.setItem('estimasi', sisaMenit)
+
+                }
+
+                if (waktuTersisa > 0) {
+                    setTimeout(() => {
+                        this.tampilkanWaktuTersisa(waktuTersisa - 1);
+                        console.log(waktuTersisa)
+                    }, 60000); // Mengulang fungsi setiap 1 menit (60.000 milidetik)
+                }
+            } catch (error) {
+                console.error(error.message);
+            }
+        },
         rupiah(number) {
             return new Intl.NumberFormat("id-ID", {
                 style: "currency",
@@ -163,42 +221,70 @@ export default {
             })
             if (this.file == null) {
                 Swal.fire({
-                    title: "Bukti Transaksi Kosong" ,
+                    title: "Bukti Transaksi Kosong",
                     text: 'Harap Bukti Transaksi Di Isi Untuk Melanjutkan',
                     confirmButtonText: 'Keluar',
                 })
-            }else{
-                axios.get('//admin-enerel.delapain.com/api/user', {
-                headers: { Authorization: 'Bearer ' + this.access_token }
-            }).then((res) => {
-                axios.post('//admin-enerel.delapain.com/api/checkout', {
-                    user_id: res.data.id,
-                    name: this.name,
-                    email: this.email,
-                    number: this.phoneNumber,
-                    address: this.address,
-                    transaction_total: this.subtotal,
-                    transaction_status: "PENDING",
-                    transaction_details: idProduk,
-                    transaction_product: this.Cart,
-                })
-                    .then((res) => {
-                        console.log(res)
-                        const data = res.data.meta;
-                        if (data.status === 'Success' || data.code === 200) {
-                            this.$router.push({ name: 'success' })
-
-                            localStorage.removeItem('cart')
-                            localStorage.removeItem('subtotal')
-                            localStorage.removeItem('quantityItem')
+            } else {
+                axios.get('//127.0.0.1:8000/api/user', {
+                    headers: { Authorization: 'Bearer ' + this.access_token }
+                }).then((res) => {
+                    const data = {
+                        user_id: res.data.id,
+                        name: this.name,
+                        email: this.email,
+                        number: this.phoneNumber,
+                        address: this.address,
+                        transaction_total: this.subtotal,
+                        transaction_status: "PENDING",
+                        transaction_details: idProduk,
+                        transaction_product: this.Cart,
+                        bukti_transaksi: this.file,
+                    }
+                    axios.post('//127.0.0.1:8000/api/checkout', data, {
+                        headers: {
+                            'accept': 'application/json',
+                            'Accept-Language': 'en-US,en;q=0.8',
+                            'Content-Type': `multipart/form-data`,
                         }
                     })
-                    .catch(error => console.log(error.response.data))
-            }).catch(error => console.log(error))
+                        .then((res) => {
+                            console.log(res)
+                            const data = res.data.meta;
+                            if (data.status === 'Success' || data.code === 200) {
+                                this.$router.push({ name: 'success' })
+
+                                localStorage.removeItem('cart')
+                                localStorage.removeItem('subtotal')
+                                localStorage.removeItem('quantityItem')
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            const errorData = error.response.data.errors;
+                            var txt = '<ul class="list-item">'
+
+                            Object.values(errorData).forEach(key => {
+                                for (let i = 0; i < key.length; i++) {
+                                    const element = key[i];
+                                    txt += "<li>" + element + "</li>";
+                                }
+                            })
+                            txt += '</ul>';
+                            console.log(txt)
+                            Swal.fire({
+                                title: "Gagal Validasi",
+                                icon: "error",
+                                html: txt,
+                            });
+                        }
+
+                        )
+                }).catch(error => console.log(error))
 
             }
-            
-          
+
+
 
         }
     }

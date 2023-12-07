@@ -17,6 +17,12 @@
                             v-model="pengguna.email">
                     </div>
                     <div class="mb-2">
+                        <label for="email" class="w-full capitalize font-medium">No. HP</label>
+                        <input type="numeric" name="numeric" id="numeric"
+                            class="w-full border-0 rounded-md p-2 bg-gray-100 focus:ring-white focus:border-0 focus:bg-white"
+                            v-model="pengguna.no_hp">
+                    </div>
+                    <div class="mb-2">
                         <label for="ket" class="w-full capitalize font-medium">keterangan</label>
                         <textarea type="text" name="ket" id="ket"
                             class="w-full h-40 border-0 rounded-md p-2 bg-gray-100 focus:ring-white focus:border-0 focus:bg-white"
@@ -42,24 +48,26 @@ export default {
                 nama: null,
                 email: null,
                 ket: null,
+                no_hp: null
             }
         }
     },
     methods: {
         kirim() {
-            if (this.pengguna.nama == null || this.pengguna.email == null || this.pengguna.ket == null) {
+            if (this.pengguna.nama == null || this.pengguna.email == null || this.pengguna.ket == null || this.pengguna.no_hp == null) {
                 alert('Harap Isi Semua Form')
             } else {
                 axios({
                     method: 'post',
-                    url: '//admin-enerel.delapain.com/api/keluhan/store',
+                    url: '//127.0.0.1:8000/api/keluhan/store',
                     data: this.pengguna,
                     responseType: 'json'
                 }).then(() => {
                     alert('berhasil terkirim');
-                    this.pengguna.nama =null;
-                    this.pengguna.email =null;
-                    this.pengguna.ket =null;
+                    this.pengguna.nama = null;
+                    this.pengguna.email = null;
+                    this.pengguna.ket = null;
+                    this.pengguna.no_hp = null;
                 }).catch((err) => {
                     console.log(err)
                 })

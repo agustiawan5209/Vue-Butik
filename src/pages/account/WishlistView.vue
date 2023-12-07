@@ -137,14 +137,14 @@ export default {
     mounted() {
         // Get User Account
         if (this.loggedIn) {
-            axios.get('//admin-enerel.delapain.com/api/user', {
+            axios.get('//127.0.0.1:8000/api/user', {
                 headers: { Authorization: 'Bearer ' + this.access_token }
             })
                 .then(res => {
                     this.User = res.data;
 
                     // Get Wishlist Data
-                    axios.get('//admin-enerel.delapain.com/api/Wishlist/show', {
+                    axios.get('//127.0.0.1:8000/api/Wishlist/show', {
                         params: {
                             slug: res.data.id,
                         }
@@ -202,7 +202,7 @@ export default {
         },
         addToCart(productID, priceProduct) {
             if (this.loggedIn) {
-                axios.get('//admin-enerel.delapain.com/api/user', {
+                axios.get('//127.0.0.1:8000/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -216,7 +216,7 @@ export default {
                             detail: this.resultItem,
                         }
                         // Send Data To Cart Database
-                        axios.post('//admin-enerel.delapain.com/api/Cart/store', params)
+                        axios.post('//127.0.0.1:8000/api/Cart/store', params)
                             .then((res) => {
                                 // // Modal Notification
                                 Swal.fire({

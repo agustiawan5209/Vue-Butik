@@ -3,8 +3,10 @@
         <div class="flex flex-col max-w-full pb-6 space-y-4 sm:p-10 border-2 border-black rounded-lg">
             <h2 class="text-xl font-semibold">Detail Pemesanan barang</h2>
             <div class="max-w-md p-8 sm:flex sm:space-x-6 dark:bg-gray-900 dark:text-gray-100">
-
+                
                 <div class="flex flex-col space-y-4">
+                    <h2>Bukti Transaksi</h2>
+                    <img :src="Transaction.image_path" alt="" srcset="" width="400">
                     <div>
                         <h2 class="text-2xl font-semibold">{{ Transaction.name }}</h2>
                         <span class="text-sm dark:text-gray-400">Alamat : {{ Transaction.address }}</span>
@@ -109,7 +111,7 @@ export default {
         },
         GetTransaction(url) {
             if (this.loggedIn) {
-                axios.get("//admin-enerel.delapain.com/api/user", {
+                axios.get("//127.0.0.1:8000/api/user", {
                     headers: { Authorization: "Bearer " + this.access_token }
                 })
                     .then(res => {
@@ -135,7 +137,7 @@ export default {
         }
     },
     mounted() {
-        this.GetTransaction("//admin-enerel.delapain.com/api/transactions?transactions_id=" + this.transaction_id)
+        this.GetTransaction("//127.0.0.1:8000/api/transactions?transactions_id=" + this.transaction_id)
     },
     // components: { PaginationView }
 }

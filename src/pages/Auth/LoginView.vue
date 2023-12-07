@@ -78,7 +78,7 @@ export default {
     methods: {
         login() {
 
-            axios.post("//admin-enerel.delapain.com/api/login", {
+            axios.post("//127.0.0.1:8000/api/login", {
                 email: this.user.email,
                 password: this.user.password
             }).then(res => {

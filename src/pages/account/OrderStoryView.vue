@@ -104,7 +104,7 @@ export default {
         },
         GetTransaction(url) {
             if (this.loggedIn) {
-                axios.get("//admin-enerel.delapain.com/api/user", {
+                axios.get("//127.0.0.1:8000/api/user", {
                     headers: { Authorization: "Bearer " + this.access_token }
                 })
                     .then(res => {
@@ -130,7 +130,7 @@ export default {
         }
     },
     mounted() {
-        this.GetTransaction("//admin-enerel.delapain.com/api/transactions")
+        this.GetTransaction("//127.0.0.1:8000/api/transactions")
     },
     // components: { PaginationView }
 }

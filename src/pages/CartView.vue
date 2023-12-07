@@ -160,14 +160,14 @@ export default {
     },
     created() {
      if(this.loggedIn){
-        axios.get('//admin-enerel.delapain.com/api/user', {
+        axios.get('//127.0.0.1:8000/api/user', {
             headers: { Authorization: 'Bearer ' + this.access_token }
         })
             .then(res => {
                 this.User = res.data;
 
                 // Get Cart User
-                axios.get('//admin-enerel.delapain.com/api/Cart/show', {
+                axios.get('//127.0.0.1:8000/api/Cart/show', {
                     params: {
                         slug: res.data.id
                     }
@@ -200,7 +200,7 @@ export default {
             }).format(number);
         },
         async clearIDCart(id) {
-            axios.delete('//admin-enerel.delapain.com/api/Cart/delete', {
+            axios.delete('//127.0.0.1:8000/api/Cart/delete', {
                 data: {
                     slug: id,
                 }
@@ -217,6 +217,7 @@ export default {
                 localStorage.setItem('cart', encrypted);
                 localStorage.setItem('subtotal', this.subtotal);
                 localStorage.setItem('quantityItem', encryptedQuantityItem);
+                localStorage.setItem('estimasi', 10);
 
                 this.$router.push({ name: 'checkout' })
         },
