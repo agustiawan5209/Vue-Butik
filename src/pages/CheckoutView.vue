@@ -226,7 +226,7 @@ export default {
                     confirmButtonText: 'Keluar',
                 })
             } else {
-                axios.get('//127.0.0.1:8000/api/user', {
+                axios.get('//admin-enerel.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 }).then((res) => {
                     const data = {
@@ -241,7 +241,7 @@ export default {
                         transaction_product: this.Cart,
                         bukti_transaksi: this.file,
                     }
-                    axios.post('//127.0.0.1:8000/api/checkout', data, {
+                    axios.post('//admin-enerel.delapain.com/api/checkout', data, {
                         headers: {
                             'accept': 'application/json',
                             'Accept-Language': 'en-US,en;q=0.8',

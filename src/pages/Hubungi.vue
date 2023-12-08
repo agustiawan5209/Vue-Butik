@@ -59,7 +59,7 @@ export default {
             } else {
                 axios({
                     method: 'post',
-                    url: '//127.0.0.1:8000/api/keluhan/store',
+                    url: '//admin-enerel.delapain.com/api/keluhan/store',
                     data: this.pengguna,
                     responseType: 'json'
                 }).then(() => {

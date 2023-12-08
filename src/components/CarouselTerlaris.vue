@@ -76,7 +76,7 @@ export default defineComponent({
         }
     },
     mounted() {
-        axios.get('//127.0.0.1:8000/api/products/laris', {
+        axios.get('//admin-enerel.delapain.com/api/products/laris', {
             params: {
                 order_by: 'asc',
                 limit: 4,
@@ -96,7 +96,7 @@ export default defineComponent({
         // Add To Cart
         addToCart(productID, priceProduct) {
             if (this.loggedIn == true) {
-                axios.get('//127.0.0.1:8000/api/user', {
+                axios.get('//admin-enerel.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -104,7 +104,7 @@ export default defineComponent({
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('//127.0.0.1:8000/api/Cart/store', {
+                        axios.post('//admin-enerel.delapain.com/api/Cart/store', {
                             user_id: UserData.id,
                             product_id: productID,
                             price: priceProduct,
@@ -133,7 +133,7 @@ export default defineComponent({
         },
         addWishlist(productID) {
             if (this.loggedIn) {
-                axios.get('//127.0.0.1:8000/api/user', {
+                axios.get('//admin-enerel.delapain.com/api/user', {
                     headers: { Authorization: 'Bearer ' + this.access_token }
                 })
                     .then(res => {
@@ -141,7 +141,7 @@ export default defineComponent({
                         const UserData = res.data;
 
                         // Send Data To Cart Database
-                        axios.post('//127.0.0.1:8000/api/Wishlist/store', {
+                        axios.post('//admin-enerel.delapain.com/api/Wishlist/store', {
                             user_id: UserData.id,
                             product_id: productID,
                         }).then((res) => {

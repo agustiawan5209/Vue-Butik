@@ -54,7 +54,7 @@ export default {
     }
   },
   created() {
-    axios.get('//127.0.0.1:8000/api/user', {
+    axios.get('//admin-enerel.delapain.com/api/user', {
       headers: { Authorization: 'Bearer ' + this.access_token }
     })
       .then(res => {
@@ -62,7 +62,7 @@ export default {
       }).catch(error => console.log(error))
   },
   mounted() {
-    axios.get('//127.0.0.1:8000/api/user', {
+    axios.get('//admin-enerel.delapain.com/api/user', {
       headers: { Authorization: 'Bearer ' + this.access_token }
     })
       .then(res => {
